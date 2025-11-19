@@ -50,3 +50,57 @@ export const getProductById = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+
+//-----add product review
+export const addProductReview = async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const { id } = req.params;
+    const { rating, title, comment } = req.body;
+
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ message: 'Rating must be between 1 and 5' });
+    }
+
+    if (!comment) {
+      return res.status(400).json({ message: 'Comment is required' });
+    }
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    const alreadyReviewed = product.reviews.find(
+      (review) => review.user.toString() === userId
+    );
+
+    if (alreadyReviewed) {
+      return res.status(400).json({ message: 'Product already reviewed by this user' });
+    }
+
+    product.reviews.push({
+      user: userId,
+      product: product._id,
+      rating: Number(rating),
+      title,
+      comment,
+    });
+
+    product.numReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce((sum, review) => sum + review.rating, 0) /
+      product.reviews.length;
+
+    await product.save();
+
+    res.status(201).json({
+      message: 'Review added successfully',
+      product,
+    });
+  } catch (error) {
+    console.error('Error adding product review:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
