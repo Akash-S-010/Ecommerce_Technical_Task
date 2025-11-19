@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
-import { sendEmail } from '../utils/mailer.js';
+import { sendOTPEmail } from '../utils/mailer.js';
 import { generateToken } from '../utils/Token.js';
 
 
@@ -34,7 +34,7 @@ export const signUp = async (req, res) => {
     await newUser.save();
 
     // Send OTP to user's email using the mailer utility
-    await sendEmail(email, 'otp', { otp, minutes: 10 });
+    await sendOTPEmail(email, otp, 'Verify your email');
 
     res.status(201).json({ 
       message: 'Signup successfully. OTP sent to your email.',
@@ -64,13 +64,13 @@ export const verifyOtp = async (req, res) => {
       return res.status(400).json({ message: 'Invalid OTP' });
     }
 
-    if (user.otpExpiry < new Date()) {
+    if (user.otpExpiresAt < new Date()) {
       return res.status(400).json({ message: 'OTP has expired' });
     }
 
     // Update user as verified
     user.otp = undefined;
-    user.otpExpiry = undefined;
+    user.otpExpiresAt = undefined;
     user.isVerified = true;
     await user.save();
 
@@ -108,15 +108,24 @@ export const login = async (req, res) => {
     // Generate JWT token
     const token = generateToken(user._id, user.email);
 
-    res.status(200).json({
-      message: 'Login successful',
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      }
-    });
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    };
+
+    res
+      .cookie('token', token, cookieOptions)
+      .status(200).json({
+        message: 'Login successful',
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        }
+      });
   } catch (error) {
     console.error('Login error:', error);
     return res.status(500).json({ message: 'Server error during login' });
@@ -165,7 +174,18 @@ export const logout = (req, res) => {
 }
 
 
-export const checkUser = (req, res) => {
-  const user = req.user;
-  res.status(200).json({_id: user._id, name: user.name, email: user.email, mobile: user.mobile});
+export const checkUser = async (req, res) => {
+  try {
+    const { userId } = req.user;
+
+    const user = await User.findById(userId).select('_id name email mobile');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Check user error:', error);
+    return res.status(500).json({ message: 'Server error fetching user' });
+  }
 }
