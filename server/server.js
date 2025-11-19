@@ -8,12 +8,12 @@ dotenv.config();
 
 const app = express();
 
-const corsOptions = {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    credentials: true,
-};
+// const corsOptions = {
+//     origin: process.env.CLIENT_URL || "http://localhost:3000",
+//     credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 

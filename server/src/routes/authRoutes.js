@@ -4,7 +4,7 @@ import checkAuth from "../middlewares/checkAuth.js";
 
 const router = Router();
 
-router.post("/signUp", signUp);
+router.post("/signup", signUp);
 router.post("/verify-otp", verifyOtp);
 router.post("/login", login);
 router.put("/profile", checkAuth, updateProfile);

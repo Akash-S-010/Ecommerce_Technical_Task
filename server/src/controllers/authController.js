@@ -74,7 +74,26 @@ export const verifyOtp = async (req, res) => {
     user.isVerified = true;
     await user.save();
 
-    res.status(200).json({ message: 'Email verified successfully' });
+    // Generate JWT token
+    const token = generateToken(user._id, user.email);
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    };
+
+    res
+      .cookie('token', token, cookieOptions)
+      .status(200).json({
+        message: 'Email verified successfully',
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        }
+      });
   } catch (error) {
     console.error('OTP verification error:', error);
     return res.status(500).json({ message: 'Server error during OTP verification' });
@@ -119,7 +138,6 @@ export const login = async (req, res) => {
       .cookie('token', token, cookieOptions)
       .status(200).json({
         message: 'Login successful',
-        token,
         user: {
           id: user._id,
           name: user.name,
