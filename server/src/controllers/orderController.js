@@ -1,6 +1,7 @@
 import Order from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import User from '../models/User.js';
+import { createRazorpayOrder } from './paymentController.js';
 
 // -----Place a new order
 export const placeOrder = async (req, res) => {
@@ -50,6 +51,16 @@ export const placeOrder = async (req, res) => {
       paymentStatus: 'pending',
     });
 
+    if (paymentType === 'Razorpay') {
+      // Call Razorpay order creation
+      const razorpayOrder = await createRazorpayOrder({ body: { amount: totalPrice, currency: 'INR', receipt: order._id.toString() } }, res);
+      if (razorpayOrder && razorpayOrder.orderId) {
+        order.razorpayOrderId = razorpayOrder.orderId;
+      } else {
+        return res.status(500).json({ message: 'Failed to create Razorpay order' });
+      }
+    }
+
     await order.save();
 
     await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
@@ -57,6 +68,7 @@ export const placeOrder = async (req, res) => {
     res.status(201).json({
       message: 'Order placed successfully',
       order,
+      razorpayOrderId: order.razorpayOrderId,
     });
   } catch (error) {
     console.error('Place order error:', error);
