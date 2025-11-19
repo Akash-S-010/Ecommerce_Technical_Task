@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
-import { genOtp } from '../utils/otp.js';
 import { sendEmail } from '../utils/mailer.js';
+import { generateToken } from '../utils/Token.js';
 
 
 // -----User Signup---------
@@ -16,7 +16,7 @@ export const signUp = async (req, res) => {
     }
 
     // Generate OTP
-    const otp = genOtp();
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // valid for 10 minutes
 
     // Hash the password
@@ -77,7 +77,7 @@ export const verifyOtp = async (req, res) => {
     res.status(200).json({ message: 'Email verified successfully' });
   } catch (error) {
     console.error('OTP verification error:', error);
-    res.status(500).json({ message: 'Server error during OTP verification' });
+    return res.status(500).json({ message: 'Server error during OTP verification' });
   }
 }
 
@@ -106,11 +106,7 @@ export const login = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '1d' }
-    );
+    const token = generateToken(user._id, user.email);
 
     res.status(200).json({
       message: 'Login successful',
@@ -123,7 +119,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error during login' });
+    return res.status(500).json({ message: 'Server error during login' });
   }
 }
 
@@ -157,7 +153,7 @@ export const updateProfile = async (req, res) => {
     });
   } catch (error) {
     console.error('Profile update error:', error);
-    res.status(500).json({ message: 'Server error during profile update' });
+    return res.status(500).json({ message: 'Server error during profile update' });
   }
 };
 
