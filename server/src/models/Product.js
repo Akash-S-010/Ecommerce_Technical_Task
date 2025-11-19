@@ -1,22 +1,50 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const productSchema = new mongoose.Schema(
+const reviewSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    price: { type: Number, required: true, min: 0 },
-    discountedPrice: { type: Number, min: 0 },
-    images: [{ type: String }],
-    category: { type: String, required: true, index: true },
-    brand: { type: String },
-    specifications: { type: Map, of: String },
-    inStock: { type: Boolean, default: true },
-    stockCount: { type: Number, default: 0, min: 0 },
-    rating: { type: Number, default: 0, min: 0, max: 5 },
-    numReviews: { type: Number, default: 0 },
-    isActive: { type: Boolean, default: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+
+    rating: {
+      type: Number, required: true,
+      min: 1,
+      max: 5
+    },
+
+    title: {
+      type:
+        String
+    },
+
+    comment: {
+      type: String,
+      required: true
+
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Product", productSchema);
+
+const productSchema = new mongoose.Schema({
+  Title: { type: String, required: true },
+  description: String,
+  price: { type: Number, required: true },
+  images: [String],
+  category: String,
+  brand: String,
+  stock: { type: Number, default: 0 },
+  rating: { type: Number, default: 0 },
+  numReviews: { type: Number, default: 0 },
+  reviews: [reviewSchema],
+}, { timestamps: true });
+
+export const Product = mongoose.model('Product', productSchema);

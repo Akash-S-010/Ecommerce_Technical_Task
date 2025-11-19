@@ -71,7 +71,7 @@ export const verifyOtp = async (req, res) => {
     // Update user as verified
     user.otp = undefined;
     user.otpExpiry = undefined;
-    user.isEmailVerified = true;
+    user.isVerified = true;
     await user.save();
 
     res.status(200).json({ message: 'Email verified successfully' });
@@ -95,7 +95,7 @@ export const login = async (req, res) => {
     }
 
     // Check if user is verified
-    if (!user.isEmailVerified) {
+    if (!user.isVerified) {
       return res.status(400).json({ message: 'Please verify your email first' });
     }
 

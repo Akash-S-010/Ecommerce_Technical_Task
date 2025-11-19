@@ -1,32 +1,26 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const addressSchema = new mongoose.Schema(
-  {
-    label: { type: String }, // Home, Work, etc.
-    address: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zip: { type: String, required: true },
-    country: { type: String, default: "IN" },
-    isDefault: { type: Boolean, default: false },
-  },
-  { _id: true }
-);
+const addressSchema = new mongoose.Schema({
+  label: { type: String, required: true }, // e.g., "Home", "Office"
+  street: { type: String, required: true },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  pincode: { type: String, required: true },
+  country: { type: String, required: true },
+}, { _id: true });
 
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String },
-    email: { type: String, required: true, unique: true, lowercase: true, index: true },
-    password: { type: String },
-    googleId: { type: String, index: true },
-    mobile: { type: String, index: true },
-    isActive: { type: Boolean, default: true },
-    isEmailVerified: { type: Boolean, default: false },
-    otp: { type: String },
-    otpExpiresAt: { type: Date },
-    addresses: [addressSchema],
-  },
-  { timestamps: true }
-);
+const UserSchema = new mongoose.Schema({
+  name: { type: String },
+  email: { type: String, required: true, unique: true, lowercase: true },
+  password: { type: String }, // hashed, optional for google accounts
+  mobile: { type: String },
+  // emailVerification
+  otp: { type: String },
+  otpExpiresAt: { type: Date },
+  isVerified: { type: Boolean, default: false },
+  googleId: { type: String }, // store Google sub id if created via Google
+  addresses: [addressSchema],
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
+}, { timestamps: true });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', UserSchema);
