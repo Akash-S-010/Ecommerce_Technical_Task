@@ -62,7 +62,7 @@ export const sendOTPEmail = async (to, otp, mailText) => {
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
       <div style="text-align: center; margin-bottom: 20px;">
-        <h1 style="color: #4a154b; margin: 0;">🛒 ShopyZone </h1>
+        <h1 style="color: #464b15ff; margin: 0;">🛒 amazone </h1>
       </div>
       <h2 style="color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px;">${mailText}</h2>
       <p style="font-size: 16px;">Your code is:</p>
@@ -71,7 +71,7 @@ export const sendOTPEmail = async (to, otp, mailText) => {
       </div>
       <p style="color: #666;">This code expires in <strong>10 minutes</strong>. If you didn't request this, please ignore this email.</p>
       <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #eee; color: #888; font-size: 12px; text-align: center;">
-        <p>© ${new Date().getFullYear()} ShopyZone. All rights reserved.</p>
+        <p>© ${new Date().getFullYear()} amazone. All rights reserved.</p>
       </div>
     </div>
   `;
