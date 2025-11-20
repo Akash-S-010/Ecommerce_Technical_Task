@@ -6,7 +6,7 @@ export const addAddress = async (req, res) => {
     const { userId } = req.user;
     const { label, street, city, state, pincode, country } = req.body;
 
-    if (!label || !street || !city || !state || !pincode || !country) {
+    if (!label || !street || !city || !state || !pincode) {
       return res.status(400).json({ message: 'Please provide all required address fields' });
     }
 
