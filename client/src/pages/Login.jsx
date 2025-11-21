@@ -1,6 +1,68 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import { ChevronRight } from "lucide-react";
+
+const Login = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [showNeedHelp, setShowNeedHelp] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleContinue = (e) => {
+    e.preventDefault();
+    // TODO: Handle login logic
+    console.log("Login with:", formData);
+  };
+
+  const handleGoogleLogin = () => {
+    // TODO: Handle Google OAuth
+    console.log("Google login");
+  };
+
+  return (
+    <AuthLayout>
+      <div className="border border-gray-300 rounded-lg p-6">
+        <h1 className="text-3xl font-normal mb-4">Sign in</h1>
+
+        <form onSubmit={handleContinue}>
+          <Input
+            label="Email or mobile phone number"
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+
+          <Input
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <Button type="submit" variant="primary" className="mb-4">
+            Sign in
+          </Button>
+        </form>
+
+        <p className="text-xs text-gray-700 mb-4">
+          By continuing, you agree to Amazon's{" "}
+          <a
             href="#"
             className="text-blue-600 hover:underline hover:text-orange-600"
           >
