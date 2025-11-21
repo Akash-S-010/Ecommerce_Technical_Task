@@ -12,11 +12,11 @@ const Input = ({
   error,
 }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       {label && (
         <label
           htmlFor={name}
-          className="block text-sm font-bold mb-1 text-gray-900"
+          className="block text-[13px] font-bold mb-[2px] text-gray-900"
         >
           {label}
         </label>
@@ -29,9 +29,11 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className={`w-full px-3 py-2 border ${
-          error ? "border-red-500" : "border-gray-300"
-        } rounded focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent`}
+        className={`w-full px-2 py-[6px] text-[13px] border ${
+          error
+            ? "border-red-500 shadow-[0_0_3px_2px_rgba(220,53,69,0.4)]"
+            : "border-gray-300"
+        } rounded-[3px] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)]`}
       />
       {helperText && <p className="mt-1 text-xs text-gray-600">{helperText}</p>}
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}

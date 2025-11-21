@@ -1,55 +1,34 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
 import AuthLayout from "../components/AuthLayout";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import AuthCard from "../components/auth/AuthCard";
+import AuthFooterLinks from "../components/auth/AuthFooterLinks";
 
 const VerifyOTP = () => {
+  const navigate = useNavigate();
   const [otp, setOtp] = useState("");
-  const [email] = useState("youemail@gmail.com"); // This would come from previous step
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Handle OTP verification
-    console.log("Verify OTP:", otp);
+    navigate("/business-account");
   };
 
-  const handleResendOTP = () => {
-    // TODO: Resend OTP logic
+  const handleResend = () => {
+    // TODO: Handle resend OTP
     console.log("Resend OTP");
   };
 
   return (
     <AuthLayout>
-      {/* Progress Indicator */}
-      <div className="mb-6 bg-[#131921] text-white py-3 px-6 -mx-4 -mt-8 rounded-t-lg">
-        <div className="flex items-center justify-between max-w-md mx-auto">
-          <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-white text-[#131921] flex items-center justify-center font-bold text-sm">
-              1
-            </div>
-            <span className="ml-2 text-sm font-medium">ACCOUNT CREATION</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center font-bold text-sm">
-              2
-            </div>
-            <span className="ml-2 text-sm font-medium">BUSINESS DETAILS</span>
-          </div>
-          <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gray-600 text-white flex items-center justify-center font-bold text-sm">
-              3
-            </div>
-            <span className="ml-2 text-sm font-medium">FINISH</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="border border-gray-300 rounded-lg p-6 mt-8">
+      <AuthCard>
         <h1 className="text-3xl font-normal mb-4">Verify email address</h1>
 
         <p className="text-sm text-gray-700 mb-4">
-          To verify your email , we've sent a One Time Password (OTP) to{" "}
-          <span className="font-semibold">{email}</span>{" "}
+          To verify your email, we've sent a One Time Password (OTP) to{" "}
+          <span className="font-semibold">jagdishmandhalkar1308@gmail.com</span>{" "}
           <a
             href="#"
             className="text-blue-600 hover:underline hover:text-orange-600"
@@ -65,8 +44,8 @@ const VerifyOTP = () => {
             name="otp"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
-            placeholder="Enter OTP"
             required
+            className="mb-3"
           />
 
           <Button type="submit" variant="primary" className="mb-4">
@@ -74,44 +53,21 @@ const VerifyOTP = () => {
           </Button>
         </form>
 
-        {/* Terms */}
-        <p className="text-xs text-gray-700 mb-4">
-          By creating an account or logging in , you agree to Amazon's{" "}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline hover:text-orange-600"
-          >
-            Conditions of Use
-          </a>
-          ,{" "}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline hover:text-orange-600"
-          >
-            Privacy Notice
-          </a>
-          , and the{" "}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline hover:text-orange-600"
-          >
-            Amazon Business Terms and Conditions
-          </a>
-          . You agree that you are creating this business account on behalf of
-          your organization and have authority to bind your organization.
-        </p>
-
-        {/* Resend OTP */}
         <div className="text-center">
-          <button
-            type="button"
-            onClick={handleResendOTP}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleResend();
+            }}
             className="text-sm text-blue-600 hover:underline hover:text-orange-600"
           >
             Resend OTP
-          </button>
+          </a>
         </div>
-      </div>
+
+        <AuthFooterLinks includeBusinessTerms className="mt-4" />
+      </AuthCard>
     </AuthLayout>
   );
 };

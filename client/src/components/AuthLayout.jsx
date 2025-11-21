@@ -2,41 +2,29 @@ import React from "react";
 
 const AuthLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* Logo */}
-      <div className="pt-6 pb-4 text-center">
-        <a href="/" className="inline-block">
-          <div className="flex items-center justify-center gap-1">
-            <span className="text-3xl font-bold text-gray-900">amazon</span>
-            <span className="text-xl text-gray-900">.in</span>
-          </div>
-        </a>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+      <div className="mb-4">
+        <img src="/logo_dark.png" alt="Amazon" className="h-18" />
       </div>
 
-      {/* Main Content */}
-      <div className="grow flex items-start justify-center px-4 py-8">
-        <div className="w-full max-w-md">{children}</div>
-      </div>
+      <div >{children}</div>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-300 mt-auto">
-        <div className="py-6 px-4">
-          <div className="flex justify-center gap-6 text-xs text-blue-600 mb-2">
-            <a href="#" className="hover:underline hover:text-orange-600">
-              Conditions of Use
-            </a>
-            <a href="#" className="hover:underline hover:text-orange-600">
-              Privacy Notice
-            </a>
-            <a href="#" className="hover:underline hover:text-orange-600">
-              Help
-            </a>
-          </div>
-          <div className="text-center text-xs text-gray-600">
-            © 1996-2024, Amazon.com, Inc. or its affiliates
-          </div>
+      <div className="w-full border-t border-gray-200 mt-8 pt-6">
+        <div className="flex justify-center space-x-8 text-xs text-blue-600">
+          <a href="#" className="hover:underline hover:text-orange-700">
+            Conditions of Use
+          </a>
+          <a href="#" className="hover:underline hover:text-orange-700">
+            Privacy Notice
+          </a>
+          <a href="#" className="hover:underline hover:text-orange-700">
+            Help
+          </a>
         </div>
-      </footer>
+        <div className="text-center text-xs text-gray-600 mt-2">
+          © 1996-2024, Amazon.com, Inc. or its affiliates
+        </div>
+      </div>
     </div>
   );
 };

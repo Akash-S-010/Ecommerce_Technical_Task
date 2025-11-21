@@ -10,14 +10,14 @@ const Button = ({
   className = "",
 }) => {
   const baseStyles =
-    "py-2 px-4 rounded font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
+    "py-[7px] px-4 text-[13px] rounded-[3px] font-normal transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
 
   const variants = {
     primary:
-      "bg-[#FFD814] hover:bg-[#F7CA00] text-gray-900 focus:ring-yellow-500 border border-[#FCD200]",
+      "bg-[#FFD814] hover:bg-[#F7CA00] font-semibold text-gray-900 focus:ring-yellow-500 border border-[#FCD200] shadow-sm",
     secondary:
-      "bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 focus:ring-gray-500",
-    link: "bg-transparent hover:underline text-blue-600 focus:ring-blue-500",
+      "bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 focus:ring-gray-500 shadow-sm",
+    link: "bg-transparent hover:underline text-blue-600 focus:ring-blue-500 border-none shadow-none",
   };
 
   const widthClass = fullWidth ? "w-full" : "";

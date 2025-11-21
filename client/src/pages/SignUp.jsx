@@ -1,28 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
 import AuthLayout from "../components/AuthLayout";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import AuthCard from "../components/auth/AuthCard";
+import AuthDivider from "../components/auth/AuthDivider";
+import GoogleButton from "../components/auth/GoogleButton";
+import AuthFooterLinks from "../components/auth/AuthFooterLinks";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    mobile: "",
-    password: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Handle signup logic
-    console.log("Signup with:", formData);
+    navigate("/verify-otp");
   };
 
   const handleGoogleSignup = () => {
@@ -32,7 +27,7 @@ const SignUp = () => {
 
   return (
     <AuthLayout>
-      <div className="border border-gray-300 rounded-lg p-6">
+      <AuthCard className="w-md">
         <h1 className="text-3xl font-normal mb-4">Create Account</h1>
 
         <form onSubmit={handleSubmit}>
@@ -40,40 +35,43 @@ const SignUp = () => {
             label="Your name"
             type="text"
             name="name"
-            value={formData.name}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="First and last name"
             required
+            className="mb-3"
           />
 
           <Input
-            label="Mobile numbers"
-            type="tel"
-            name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-            placeholder="Mobile number"
+            label="Email"
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@email.com"
             required
+            className="mb-3"
           />
 
           <Input
             label="Password"
             type="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 6 characters"
             helperText="Passwords must be at least 6 characters."
             required
+            className="mb-3"
           />
 
           <Button type="submit" variant="primary" className="mb-4">
-            Verify mobile number
+            Verify email
           </Button>
         </form>
 
         {/* Buying for work */}
-        <div className="pt-4 border-t border-gray-300 mb-4">
+        <div className="pt-4 border-t border-gray-300 mt-4 mb-4">
           <p className="text-sm font-bold mb-1">Buying for work?</p>
           <a
             href="#"
@@ -99,60 +97,15 @@ const SignUp = () => {
         </div>
 
         {/* Terms */}
-        <p className="text-xs text-gray-700 mt-4">
-          By creating an account or logging in , you agree to Amazon's{" "}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline hover:text-orange-600"
-          >
-            Conditions of Use
-          </a>{" "}
-          and{" "}
-          <a
-            href="#"
-            className="text-blue-600 hover:underline hover:text-orange-600"
-          >
-            Privacy Notice
-          </a>
-          .
-        </p>
-      </div>
+        <AuthFooterLinks className="mt-4" />
+      </AuthCard>
 
       {/* Google Signup */}
       <div className="mt-6">
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-white text-gray-500">or</span>
-          </div>
+        <AuthDivider text="or" />
+        <div className="mt-4">
+          <GoogleButton onClick={handleGoogleSignup} />
         </div>
-
-        <button
-          onClick={handleGoogleSignup}
-          className="mt-4 w-full flex items-center justify-center gap-3 py-2 px-4 border border-gray-300 rounded hover:bg-gray-50 transition-colors"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
-            <path
-              fill="#4285F4"
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-            />
-            <path
-              fill="#34A853"
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-            />
-            <path
-              fill="#FBBC05"
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-            />
-            <path
-              fill="#EA4335"
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-            />
-          </svg>
-          <span className="text-sm text-gray-700">Login with Google</span>
-        </button>
       </div>
     </AuthLayout>
   );
