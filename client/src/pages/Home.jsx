@@ -1,13 +1,18 @@
 import React from "react";
 import Header from "../components/layout/Header";
 import HeroSlider from "../components/home/HeroSlider";
-import CategoryCard, { homeCardData } from "../components/home/CategoryCard";
+import CategoryCard, {
+  homeCardData,
+  scrollData,
+} from "../components/home/CategoryCard";
+import ProductScroll from "../components/home/ProductScroll";
+import Footer from "../components/layout/Footer";
 
 const Home = () => {
   return (
     <div className="bg-[#eaeded] min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 max-w-[1500px] mx-auto w-full relative">
+      <main className="flex-1 max-w-[1500px] mx-auto w-full relative pb-5">
         <HeroSlider />
 
         {/* Category Cards Grid - Overlapping the slider */}
@@ -21,7 +26,16 @@ const Home = () => {
             />
           ))}
         </div>
+
+        {/* Product Scroll Sections */}
+        <ProductScroll
+          title="Related to items you've viewed"
+          products={scrollData}
+        />
+
+        <ProductScroll title="More items to consider" products={scrollData} />
       </main>
+      <Footer />
     </div>
   );
 };

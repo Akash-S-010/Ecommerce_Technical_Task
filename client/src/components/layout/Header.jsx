@@ -1,128 +1,126 @@
 import React from "react";
+import { MapPin, Search, ShoppingCart, Menu, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Search, ShoppingCart, MapPin, Menu, ChevronDown } from "lucide-react";
+import useAuthStore from "../../store/useAuthStore";
 
 const Header = () => {
+  const { user, isAuthenticated } = useAuthStore();
+
+  const locationText =
+    isAuthenticated && user?.address?.city && user?.address?.state
+      ? `${user.address.city}, ${user.address.state}`
+      : "Update location";
+
+  const greetingText = isAuthenticated
+    ? `Hello, ${user?.name}`
+    : "Hello, sign in";
+
   return (
-    <header className="w-full">
-      {/* Top Bar - Dark Blue Background */}
-      <div className="bg-[#131921] text-white h-[60px] flex items-center px-4 gap-4">
+    <header className="w-full z-50">
+      {/* Top Bar */}
+      <div className="bg-[#131921] text-white h-[60px] flex items-center px-4 gap-2">
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center hover:border hover:border-white p-1 rounded-sm"
+          className="border border-transparent hover:border-white rounded-sm p-1 cursor-pointer flex items-center mt-2"
         >
           <img
-            src="/logo_dark.png"
+            src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
             alt="Amazon"
-            className="h-8 mt-2 object-contain"
+            className="h-8 object-contain"
           />
-          <span className="text-xs text-gray-300 self-start ml-1">.in</span>
+          <span className="text-xs font-bold -mt-3 ml-0.5 text-gray-300">
+            .in
+          </span>
         </Link>
 
-        {/* Location Picker */}
-        <div className="hidden md:flex flex-col justify-center hover:border hover:border-white p-1 rounded-sm cursor-pointer leading-tight min-w-[140px]">
-          <span className="text-[#cccccc] text-xs ml-4">
-            Delivering to Surat 394210
-          </span>
-          <div className="flex items-center font-bold text-sm">
-            <MapPin size={15} className="mr-1" />
-            <span>Update location</span>
+        {/* Location */}
+        <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden md:flex items-center gap-1 leading-tight">
+          <MapPin className="w-4 h-4 mt-2" />
+          <div className="flex flex-col">
+            <span className="text-xs text-gray-300 ml-0.5">Delivering to</span>
+            <span className="text-sm font-bold">{locationText}</span>
           </div>
         </div>
 
         {/* Search Bar */}
-        <div className="flex-1 flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-[#f3a847]">
-          {/* Category Dropdown */}
-          <button className="bg-[#f3f3f3] text-gray-600 px-3 text-xs border-r border-gray-300 hover:bg-[#dadada] flex items-center gap-1 rounded-l-md">
-            All <ChevronDown size={10} fill="currentColor" />
-          </button>
-
-          {/* Input */}
+        <div className="flex-1 h-10 hidden sm:flex rounded-md overflow-hidden focus-within:ring-3 focus-within:ring-[#f3a847]">
+          <div className="bg-[#f3f3f3] text-gray-600 px-3 flex items-center text-xs border-r border-gray-300 cursor-pointer hover:bg-[#dadada] transition-colors">
+            All <ChevronDown className="w-3 h-3 ml-1" />
+          </div>
           <input
             type="text"
-            className="flex-1 px-3 text-black outline-none bg-white placeholder-gray-500"
             placeholder="Search Amazon.in"
+            className="flex-1 px-3 text-black outline-none placeholder-gray-500"
           />
-
-          {/* Search Button */}
-          <button className="bg-[#febd69] hover:bg-[#f3a847] px-4 flex items-center justify-center rounded-r-md">
-            <Search size={20} className="text-gray-800" />
-          </button>
+          <div className="bg-[#febd69] hover:bg-[#f3a847] w-11 flex items-center justify-center cursor-pointer transition-colors">
+            <Search className="w-5 h-5 text-gray-800" />
+          </div>
         </div>
 
-        {/* Language Selector */}
-        <div className="hidden md:flex items-center hover:border hover:border-white p-2 rounded-sm cursor-pointer font-bold text-sm gap-1">
+        {/* Language */}
+        <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden lg:flex items-center gap-1">
           <img
             src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
-            alt="India"
-            className="w-5 h-3.5 object-cover"
+            alt="IN"
+            className="w-5 h-3 object-cover"
           />
-          <span>EN</span>
-          <ChevronDown size={10} className="text-gray-400" />
+          <span className="font-bold text-sm">EN</span>
+          <ChevronDown className="w-3 h-3 text-gray-400" />
         </div>
 
         {/* Account & Lists */}
-        <div className="hidden md:flex flex-col justify-center hover:border hover:border-white p-2 rounded-sm cursor-pointer leading-tight">
-          <span className="text-xs">Hello, sign in</span>
-          <div className="flex items-center font-bold text-sm">
-            <span>Account & Lists</span>
-            <ChevronDown size={10} className="ml-1 text-gray-400" />
+        <Link
+          to={isAuthenticated ? "/profile" : "/login"}
+          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight"
+        >
+          <div className="text-xs text-gray-300">{greetingText}</div>
+          <div className="text-sm font-bold flex items-center gap-0.5">
+            Account & Lists <ChevronDown className="w-3 h-3 text-gray-400" />
           </div>
-        </div>
+        </Link>
 
         {/* Returns & Orders */}
-        <div className="hidden md:flex flex-col justify-center hover:border hover:border-white p-2 rounded-sm cursor-pointer leading-tight">
-          <span className="text-xs">Returns</span>
-          <span className="font-bold text-sm">& Orders</span>
+        <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden sm:block">
+          <div className="text-xs text-gray-300">Returns</div>
+          <div className="text-sm font-bold">& Orders</div>
         </div>
 
         {/* Cart */}
-        <Link
-          to="/cart"
-          className="flex items-end hover:border hover:border-white p-2 rounded-sm cursor-pointer"
-        >
+        <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer flex items-end relative">
           <div className="relative">
-            <ShoppingCart size={28} />
-            <span className="absolute -top-1 left-1/2 -translate-x-1/2 text-[#f08804] font-bold text-xs">
+            <ShoppingCart className="w-8 h-8" />
+            <span className="absolute -top-1 right-0 text-[#f08804] font-bold text-sm bg-[#131921] rounded-full w-5 h-5 flex items-center justify-center">
               0
             </span>
           </div>
-          <span className="font-bold text-sm mb-1 ml-1 hidden md:inline">
-            Cart
-          </span>
-        </Link>
+          <span className="font-bold text-sm mb-1 hidden sm:inline">Cart</span>
+        </div>
       </div>
 
-      {/* Bottom Bar - Navigation */}
-      <div className="bg-[#232f3e] text-white h-[40px] flex items-center px-4 text-sm gap-4 overflow-x-auto">
-        <div className="flex items-center gap-1 font-bold hover:border hover:border-white p-1 rounded-sm cursor-pointer whitespace-nowrap">
-          <Menu size={20} />
-          <span>All</span>
+      {/* Bottom Bar */}
+      <div className="bg-[#232f3e] text-white h-[40px] flex items-center px-4 gap-4 text-sm overflow-x-auto no-scrollbar">
+        <div className="flex items-center gap-1 font-bold cursor-pointer border border-transparent hover:border-white p-1 rounded-sm whitespace-nowrap">
+          <Menu className="w-5 h-5" /> All
         </div>
-
         {[
           "Amazon miniTV",
           "Sell",
           "Best Sellers",
-          "Today's Deals",
           "Mobiles",
+          "Today's Deals",
           "Customer Service",
-          "Prime",
           "Electronics",
-          "Fashion",
+          "Prime",
           "New Releases",
           "Home & Kitchen",
-          "Amazon Pay",
+          "Gift Ideas",
         ].map((item) => (
           <div
             key={item}
-            className="hover:border hover:border-white p-1 rounded-sm cursor-pointer whitespace-nowrap flex items-center gap-1"
+            className="cursor-pointer border border-transparent hover:border-white p-1 rounded-sm whitespace-nowrap"
           >
             {item}
-            {item === "Prime" && (
-              <ChevronDown size={10} className="text-gray-400" />
-            )}
           </div>
         ))}
       </div>

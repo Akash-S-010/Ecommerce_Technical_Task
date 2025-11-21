@@ -158,4 +158,47 @@ export const homeCardData = [
   },
 ];
 
+export const scrollData = [
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 1",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 2",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 3",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 4",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 5",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 6",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 7",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 8",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 9",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    name: "Dress 10",
+  },
+];
+
 export default CategoryCard;
