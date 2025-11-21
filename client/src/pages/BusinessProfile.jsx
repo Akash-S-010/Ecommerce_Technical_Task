@@ -1,24 +1,46 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import AuthLayout from "../components/AuthLayout";
 import AuthCard from "../components/auth/AuthCard";
 import AuthFooterLinks from "../components/auth/AuthFooterLinks";
+import useAuthStore from "../store/useAuthStore";
 
 const BusinessProfile = () => {
   const navigate = useNavigate();
+  const { updateProfile, isLoading, clearError } = useAuthStore();
+
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Handle business profile creation
-    console.log("Business profile created");
-    // Navigate to home or dashboard
-    navigate("/");
+    clearError();
+
+    // Validation
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    const result = await updateProfile({ name, mobile });
+
+    if (result.success) {
+      toast.success("Profile updated successfully!");
+      // Navigate to home or dashboard
+      navigate("/");
+    } else {
+      toast.error(result.message || "Profile update failed");
+    }
   };
 
   return (
@@ -75,8 +97,13 @@ const BusinessProfile = () => {
             required
           />
 
-          <Button type="submit" variant="primary" className="mb-4">
-            Next step
+          <Button
+            type="submit"
+            variant="primary"
+            className="mb-4"
+            disabled={isLoading}
+          >
+            {isLoading ? "Updating..." : "Next step"}
           </Button>
         </form>
 

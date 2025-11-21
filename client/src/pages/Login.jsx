@@ -1,23 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import AuthLayout from "../components/AuthLayout";
 import AuthCard from "../components/auth/AuthCard";
 import AuthDivider from "../components/auth/AuthDivider";
 import GoogleButton from "../components/auth/GoogleButton";
+import useAuthStore from "../store/useAuthStore";
 import { ChevronRight } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login, isLoading, clearError } = useAuthStore();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showNeedHelp, setShowNeedHelp] = useState(false);
 
-  const handleContinue = (e) => {
+  const handleContinue = async (e) => {
     e.preventDefault();
-    // TODO: Handle login logic
-    navigate("/verify-otp");
+    clearError();
+
+    const result = await login({ email, password });
+
+    if (result.success) {
+      toast.success("Login successful!");
+      // Navigate to home page after successful login
+      navigate("/");
+    } else {
+      toast.error(result.message || "Login failed");
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -49,8 +62,13 @@ const Login = () => {
             required
           />
 
-          <Button type="submit" variant="primary" className="mb-4">
-            Continue
+          <Button
+            type="submit"
+            variant="primary"
+            className="mb-4"
+            disabled={isLoading}
+          >
+            {isLoading ? "Signing in..." : "Continue"}
           </Button>
         </form>
 

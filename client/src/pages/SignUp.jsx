@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import AuthLayout from "../components/AuthLayout";
@@ -7,17 +8,35 @@ import AuthCard from "../components/auth/AuthCard";
 import AuthDivider from "../components/auth/AuthDivider";
 import GoogleButton from "../components/auth/GoogleButton";
 import AuthFooterLinks from "../components/auth/AuthFooterLinks";
+import useAuthStore from "../store/useAuthStore";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { signup, isLoading, clearError } = useAuthStore();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Handle signup logic
-    navigate("/verify-otp");
+    clearError();
+
+    // Basic validation
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    const result = await signup({ name, email, password });
+
+    if (result.success) {
+      toast.success("Account created! Please check your email for OTP");
+      // Navigate to OTP verification page
+      navigate("/verify-otp");
+    } else {
+      toast.error(result.message || "Signup failed");
+    }
   };
 
   const handleGoogleSignup = () => {
@@ -27,7 +46,7 @@ const SignUp = () => {
 
   return (
     <AuthLayout>
-      <AuthCard className="w-md">
+      <AuthCard className="w-lg px-8 py-8 border-gray-400">
         <h1 className="text-3xl font-normal mb-4">Create Account</h1>
 
         <form onSubmit={handleSubmit}>
@@ -65,8 +84,13 @@ const SignUp = () => {
             className="mb-3"
           />
 
-          <Button type="submit" variant="primary" className="mb-4">
-            Verify email
+          <Button
+            type="submit"
+            variant="primary"
+            className="mb-4"
+            disabled={isLoading}
+          >
+            {isLoading ? "Creating account..." : "Verify email"}
           </Button>
         </form>
 
