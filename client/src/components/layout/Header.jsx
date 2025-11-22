@@ -7,8 +7,8 @@ const Header = () => {
   const { user, isAuthenticated } = useAuthStore();
 
   const locationText =
-    isAuthenticated && user?.address?.city && user?.address?.state
-      ? `${user.address.city}, ${user.address.state}`
+    isAuthenticated && user?.addresses?.length > 0
+      ? `${user.addresses[0].city} ${user.addresses[0].pincode}`
       : "Update location";
 
   const greetingText = isAuthenticated
