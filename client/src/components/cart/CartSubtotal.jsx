@@ -13,7 +13,7 @@ const CartSubtotal = () => {
       {/* Free Delivery Message */}
       <div className="flex gap-2 mb-4">
         <div className="mt-1">
-          <CheckCircle className="w-5 h-5 text-[#067D62] fill-[#067D62] text-white" />
+          <CheckCircle className="w-5 h-5 text-[#067D62] fill-[#067D62]" />
         </div>
         <div className="text-sm">
           <span className="text-[#067D62] font-medium">

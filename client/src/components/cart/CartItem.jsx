@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useCartStore from "../../store/useCartStore";
+import useCartStore from "../../store/useCartStore.js";
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCartStore();
@@ -12,7 +12,7 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex gap-4 py-4 border-b border-gray-200 last:border-0">
       {/* Image */}
-      <div className="w-[180px] h-[180px] flex-shrink-0">
+      <div className="w-[180px] h-[180px]">
         <Link to={`/product/${product._id}`}>
           <img
             src={product.images?.[0] || "https://via.placeholder.com/180"}

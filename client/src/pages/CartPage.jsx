@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import useCartStore from "../store/useCartStore";
+import useCartStore from "../store/useCartStore.js";
 import CartItem from "../components/cart/CartItem";
 import CartSubtotal from "../components/cart/CartSubtotal";
 import DetailedProductScroll from "../components/home/DetailedProductScroll";
@@ -35,7 +35,7 @@ const CartPage = () => {
           {/* Left Column: Cart Items */}
           <div className="flex-1">
             <div className="bg-white p-6 mb-6">
-              <div className="flex justify-between items-end border-b border-gray-200 pb-2 mb-4 pb-4">
+              <div className="flex justify-between items-end border-b border-gray-200 mb-4 pb-4">
                 <h1 className="text-3xl font-medium text-gray-900 mb">
                   Shopping Cart
                 </h1>
@@ -87,7 +87,7 @@ const CartPage = () => {
           </div>
 
           {/* Right Column: Subtotal & Recommendations */}
-          <div className="lg:w-[300px] flex-shrink-0 space-y-4">
+          <div className="lg:w-[300px] space-y-4">
             {cart.items.length > 0 && <CartSubtotal />}
 
             {/* Recommendations (Dummy for now, matching image layout) */}
