@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/layout/AuthLayout";
 import AuthCard from "../components/auth/AuthCard";
 import AuthDivider from "../components/auth/AuthDivider";
 import GoogleButton from "../components/auth/GoogleButton";

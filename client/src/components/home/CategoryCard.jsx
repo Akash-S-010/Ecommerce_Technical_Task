@@ -59,7 +59,7 @@ export const homeCardData = [
       {
         label: "Cushion covers, bedsheets & more",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG20/Home/2024/Gateway/BTFGW/PCQC/186x116_Home_furnishing_2._SY116_CB584596691_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG20/Home/2024/Gateway/BTFGW/PCQC/New/1x/final/186x116_Home_furnishings_2._SY116_CB555624324_.jpg96691_.jpg",
       },
       {
         label: "Figurines, vases & more",
@@ -74,7 +74,7 @@ export const homeCardData = [
       {
         label: "Lighting solutions",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG20/Home/2024/Gateway/BTFGW/PCQC/186x116_Lighting_2._SY116_CB584596691_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG20/Home/2024/Gateway/BTFGW/PCQC/New/1x/final/186x116_Home_lighting_2._SY116_CB555624324_.jpg96691_.jpg",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const homeCardData = [
       {
         label: "Microwaves",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG15/Irfan/GATEWAY/MSO/Appliances-QC-PC-186x116--B07G5J591B._SY116_CB667322346_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG15/Irfan/GATEWAY/MSO/Appliances-QC-PC-186x116--B07G5J5FYP._SY116_CB667322346_.jpg22346_.jpg",
       },
       {
         label: "Washing machines",
@@ -111,7 +111,7 @@ export const homeCardData = [
       {
         label: "Starting $249 | boAt",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/img21/june/CE/GW/QC/PC/PC_QuadCard_BoAt_0.5x._SY116_CB667159060_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img21/june/CE/GW/QC/PC/PC_QuadCard_boAt_0.5x._SY116_CB553870684_.jpg59060_.jpg",
       },
       {
         label: "Starting $349 | boult",
@@ -131,28 +131,28 @@ export const homeCardData = [
     ],
   },
   {
-    title: "Starting $99 | Amazon Brands & more",
+    title: "Automotive essentials | Up to 60% off",
     type: "grid",
     items: [
       {
-        label: "Starting $299 | Home storage",
+        label: "Cleaning accesories",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/img24/Symbol/2024/GW_Feb/Desktop/QC/1_1x._SY116_CB582668236_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Glasscare1X._SY116_CB410830553_.jpg68236_.jpg",
       },
       {
-        label: "Up to 60% off | Storage & racks",
+        label: "Tyre care",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/img24/Symbol/2024/GW_Feb/Desktop/QC/2_1x._SY116_CB582668236_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Rim_tyrecare1x._SY116_CB410830552_.jpg68236_.jpg",
       },
       {
-        label: "Starting $99 | Toys & games",
+        label: "Helmet",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/img24/Symbol/2024/GW_Feb/Desktop/QC/3_1x._SY116_CB582668236_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Vega_helmet_186x116._SY116_CB405090404_.jpg",
       },
       {
-        label: "Up to 60% off | Jackets",
+        label: "Vacuum cleaner",
         image:
-          "https://images-eu.ssl-images-amazon.com/images/G/31/img24/Symbol/2024/GW_Feb/Desktop/QC/4_1x._SY116_CB582668236_.jpg",
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Vaccum1x._SY116_CB410830552_.jpg",
       },
     ],
   },
