@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "../components/layout/Header";
 import HeroSlider from "../components/home/HeroSlider";
-import CategoryCard, {
-  homeCardData,
-  scrollData,
-} from "../components/home/CategoryCard";
+import CategoryCard from "../components/home/CategoryCard";
+import { homeCardData } from "../data/homeCardData";
+import { scrollData } from "../data/scrollData";
+import { detailedScrollData } from "../data/detailedScrollData";
 import ProductScroll from "../components/home/ProductScroll";
+import DetailedProductScroll from "../components/home/DetailedProductScroll";
 import Footer from "../components/layout/Footer";
 
 const Home = () => {
@@ -30,10 +31,19 @@ const Home = () => {
         {/* Product Scroll Sections */}
         <ProductScroll
           title="Related to items you've viewed"
-          products={scrollData.Clothes  }
+          products={scrollData.Clothes}
         />
 
-        <ProductScroll title="More items to consider" products={scrollData.Vehicles} />
+        <ProductScroll
+          title="More items to consider"
+          products={scrollData.Vehicles}
+        />
+
+        {/* Detailed Product Scroll Section */}
+        <DetailedProductScroll
+          title="More items to consider"
+          products={detailedScrollData}
+        />
       </main>
       <Footer />
     </div>

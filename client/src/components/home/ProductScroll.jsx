@@ -24,7 +24,7 @@ const ProductScroll = ({ title, linkText = "See more", products = [] }) => {
         {linkText && (
           <Link
             to="#"
-            className="text-sm text-[#007185] hover:text-[#C7511F] hover:underline"
+            className="text-sm text-amazon-link hover:text-[#C7511F] hover:underline"
           >
             {linkText}
           </Link>

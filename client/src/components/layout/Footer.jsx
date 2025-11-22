@@ -30,7 +30,7 @@ const Footer = () => {
               New customer?{" "}
               <Link
                 to="/signup"
-                className="text-[#007185] hover:text-[#C7511F] hover:underline"
+                className="text-amazon-link hover:text-[#C7511F] hover:underline"
               >
                 Start here.
               </Link>

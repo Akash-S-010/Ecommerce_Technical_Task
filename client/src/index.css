@@ -5,6 +5,7 @@
   --color-amazon-orange: #FFD814;
   --color-amazon-navbar: #131921;
   --color-amazon-subheader: #232F3E;
+  --color-amazon-link: #007185;
   
   /* Extend Tailwind colors */
   --color-primary: var(--color-amazon-orange);
