@@ -175,7 +175,7 @@ const AddressManagement = () => {
 
       {/* Add/Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 backdrop-blur-md z-10 flex items-center justify-center p-4">
+        <div className="fixed inset-0 backdrop-blur-md z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-lg overflow-hidden">
             <div className="bg-[#f0f2f2] px-6 py-4 border-b flex justify-between items-center">
               <h2 className="text-lg font-bold">
