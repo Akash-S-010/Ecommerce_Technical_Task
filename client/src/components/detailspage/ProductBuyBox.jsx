@@ -1,8 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { MapPin } from "lucide-react";
+import useCartStore from "../../store/useCartStore";
 
 const ProductBuyBox = ({ product, user }) => {
+  const navigate = useNavigate();
+  const { addToCart } = useCartStore();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = async () => {
+    const success = await addToCart(product._id, quantity);
+    if (success) {
+      navigate("/cart");
+    }
+  };
+
   return (
     <div className="lg:w-[20%]">
       <div className="border border-gray-300 rounded-lg p-4 shadow-sm">
@@ -50,18 +62,24 @@ const ProductBuyBox = ({ product, user }) => {
         </div>
 
         <div className="mb-4">
-          <select className="w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm bg-[#F0F2F2] hover:bg-[#E3E6E6] cursor-pointer focus:ring-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none">
-            <option>Quantity: 1</option>
+          <select
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+            className="w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm bg-[#F0F2F2] hover:bg-[#E3E6E6] cursor-pointer focus:ring-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none"
+          >
             {[...Array(9)].map((_, i) => (
-              <option key={i + 2} value={i + 2}>
-                {i + 2}
+              <option key={i + 1} value={i + 1}>
+                Quantity: {i + 1}
               </option>
             ))}
           </select>
         </div>
 
         <div className="space-y-3 mb-4">
-          <button className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm">
+          <button
+            onClick={handleAddToCart}
+            className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm"
+          >
             Add to Cart
           </button>
           <button className="w-full bg-[#FFA41C] hover:bg-[#FA8900] border border-[#FF8F00] rounded-full py-2 text-sm shadow-sm">
