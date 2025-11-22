@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import VerifyOTP from "./pages/VerifyOTP";
 import BusinessProfile from "./pages/BusinessProfile";
+import AddressManagement from "./pages/AddressManagement";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -34,7 +35,7 @@ const App = () => {
       <Toaster
         position="top-right"
         toastOptions={{
-          duration: 4000,
+          duration: 3000,
           style: {
             background: "#fff",
             color: "#333",
@@ -62,6 +63,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/business-account" element={<BusinessProfile />} />
+        <Route path="/manage-address" element={<AddressManagement />} />
 
         {/* 404 Not Found - Catch all unmatched routes */}
         <Route path="*" element={<NotFound />} />

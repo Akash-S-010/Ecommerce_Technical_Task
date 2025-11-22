@@ -6,11 +6,6 @@ import useAuthStore from "../../store/useAuthStore";
 const Header = () => {
   const { user, isAuthenticated } = useAuthStore();
 
-  const locationText =
-    isAuthenticated && user?.addresses?.length > 0
-      ? `${user.addresses[0].city} ${user.addresses[0].pincode}`
-      : "Update location";
-
   const greetingText = isAuthenticated
     ? `Hello, ${user?.name}`
     : "Hello, sign in";
@@ -35,13 +30,20 @@ const Header = () => {
         </Link>
 
         {/* Location */}
-        <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden md:flex items-center gap-1 leading-tight">
+        <Link
+          to="/manage-address"
+          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden md:flex items-center gap-1 leading-tight"
+        >
           <MapPin className="w-4 h-4 mt-2" />
           <div className="flex flex-col">
-            <span className="text-xs text-gray-300 ml-0.5">Delivering to</span>
-            <span className="text-sm font-bold">{locationText}</span>
+            <span className="text-xs text-gray-300 ml-0.5">
+              {isAuthenticated && user?.addresses?.length > 0
+                ? `Delivering to ${user.addresses[0].city} ${user.addresses[0].pincode}`
+                : "Delivering to"}
+            </span>
+            <span className="text-sm font-bold">Update location</span>
           </div>
-        </div>
+        </Link>
 
         {/* Search Bar */}
         <div className="flex-1 h-10 hidden sm:flex rounded-md overflow-hidden focus-within:ring-3 focus-within:ring-[#f3a847]">

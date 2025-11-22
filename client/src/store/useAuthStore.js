@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import authApi from '../api/authApi.js';
+import addressApi from '../api/addressApi.js';
 
 
 const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: true, 
   error: null,
   tempEmail: null, // Store email temporarily for OTP verification
 
@@ -14,8 +15,8 @@ const useAuthStore = create((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await authApi.signup(userData);
-      set({ 
-        isLoading: false, 
+      set({
+        isLoading: false,
         tempEmail: userData.email // Store email for OTP verification
       });
       return { success: true, message: response.message };
@@ -26,7 +27,7 @@ const useAuthStore = create((set) => ({
     }
   },
 
-//   verify otp
+  //   verify otp
   verifyOtp: async (otpData) => {
     set({ isLoading: true, error: null });
     try {
@@ -46,7 +47,7 @@ const useAuthStore = create((set) => ({
   },
 
 
-//   Login user
+  //   Login user
   login: async (credentials) => {
     set({ isLoading: true, error: null });
     try {
@@ -64,8 +65,8 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  
-//   USer profile update
+
+  //   USer profile update
   updateProfile: async (profileData) => {
     set({ isLoading: true, error: null });
     try {
@@ -82,9 +83,58 @@ const useAuthStore = create((set) => ({
     }
   },
 
+  // Address Management Actions
+  addAddress: async (addressData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await addressApi.addAddress(addressData);
+      set((state) => ({
+        user: { ...state.user, addresses: response.addresses },
+        isLoading: false,
+      }));
+      return { success: true, message: response.message };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to add address';
+      set({ isLoading: false, error: errorMessage });
+      return { success: false, message: errorMessage };
+    }
+  },
+
+  updateAddress: async (addressId, addressData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await addressApi.updateAddress(addressId, addressData);
+      set((state) => ({
+        user: { ...state.user, addresses: response.addresses },
+        isLoading: false,
+      }));
+      return { success: true, message: response.message };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to update address';
+      set({ isLoading: false, error: errorMessage });
+      return { success: false, message: errorMessage };
+    }
+  },
+
+  deleteAddress: async (addressId) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await addressApi.deleteAddress(addressId);
+      set((state) => ({
+        user: { ...state.user, addresses: response.addresses },
+        isLoading: false,
+      }));
+      return { success: true, message: response.message };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to delete address';
+      set({ isLoading: false, error: errorMessage });
+      return { success: false, message: errorMessage };
+    }
+  },
 
 
-//   Check if user is authenticated
+
+  //   Check if user is authenticated
   checkAuth: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -105,8 +155,8 @@ const useAuthStore = create((set) => ({
     }
   },
 
-  
-//   Logout user
+
+  //   Logout user
   logout: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -124,7 +174,7 @@ const useAuthStore = create((set) => ({
     }
   },
 
-// clear erors
+  // clear erors
   clearError: () => set({ error: null }),
 }));
 
