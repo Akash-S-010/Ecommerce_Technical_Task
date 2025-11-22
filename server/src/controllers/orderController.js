@@ -71,8 +71,10 @@ export const placeOrder = async (req, res) => {
 
     await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
 
-    // Clear the user's cart
-    await Cart.findOneAndUpdate({ user: userId }, { items: [] });
+    // Clear the user's cart only if COD
+    if (paymentType === 'COD') {
+      await Cart.findOneAndUpdate({ user: userId }, { items: [] });
+    }
 
     res.status(201).json({
       message: 'Order placed successfully',
@@ -91,7 +93,13 @@ export const getMyOrders = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const orders = await Order.find({ user: userId })
+    const orders = await Order.find({
+      user: userId,
+      $or: [
+        { paymentType: 'COD' },
+        { paymentType: 'Razorpay', paymentStatus: 'paid' }
+      ]
+    })
       .sort({ createdAt: -1 })
       .populate('items.product');
 
@@ -147,6 +155,10 @@ export const updatePaymentStatus = async (req, res) => {
     }
 
     await order.save();
+
+    if (paymentStatus === 'paid') {
+      await Cart.findOneAndUpdate({ user: userId }, { items: [] });
+    }
 
     res.status(200).json({
       message: 'Payment status updated successfully',

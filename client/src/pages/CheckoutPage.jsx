@@ -14,7 +14,7 @@ const CheckoutPage = () => {
   const { user } = useAuthStore();
 
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("COD");
+  const [paymentMethod, setPaymentMethod] = useState("Razorpay");
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {

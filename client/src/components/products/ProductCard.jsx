@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useCartStore from "../../store/useCartStore";
 
 const ProductCard = ({ product }) => {
+  const { addToCart } = useCartStore();
   const { _id, Title, price, images, rating, numReviews, brand } = product;
 
   // Calculate discount percentage (dummy for now)
@@ -112,7 +114,13 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Add to Cart Button */}
-      <button className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-sm py-1.5 rounded-lg border border-[#FCD200] font-normal">
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          addToCart(_id);
+        }}
+        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-sm py-1.5 rounded-lg border border-[#FCD200] font-normal"
+      >
         Add to cart
       </button>
     </div>
