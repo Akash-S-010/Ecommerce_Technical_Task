@@ -92,6 +92,7 @@ export const verifyOtp = async (req, res) => {
           id: user._id,
           name: user.name,
           email: user.email,
+          addresses: user.addresses,
         }
       });
   } catch (error) {
@@ -147,6 +148,7 @@ export const login = async (req, res) => {
           id: user._id,
           name: user.name,
           email: user.email,
+          addresses: user.addresses,
         }
       });
   } catch (error) {
@@ -199,6 +201,7 @@ export const verifyLoginOtp = async (req, res) => {
           id: user._id,
           name: user.name,
           email: user.email,
+          addresses: user.addresses,
         }
       });
   } catch (error) {
@@ -253,7 +256,7 @@ export const checkUser = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const user = await User.findById(userId).select('_id name email mobile');
+    const user = await User.findById(userId).select('_id name email mobile addresses');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
