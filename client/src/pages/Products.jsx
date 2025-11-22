@@ -35,52 +35,50 @@ const Products = () => {
       <Header />
       <CategoryNav />
 
-      <div className="flex-1 max-w-[1500px] mx-auto w-full">
-        <div className="flex gap-4 p-4">
-          {/* Filters Sidebar */}
-          <aside className="shrink-0 sticky top-4 self-start max-h-[calc(100vh-2rem)] overflow-y-auto">
-            <ProductFilters />
-          </aside>
+      <div className="flex-1 flex max-w-[1500px] mx-auto w-full items-start gap-4 p-4">
+        {/* Filters Sidebar - Sticky */}
+        <aside className="w-64 shrink-0 sticky top-0 pb-4">
+          <ProductFilters />
+        </aside>
 
-          {/* Products Grid */}
-          <main className="flex-1">
-            {loading ? (
-              <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#f08804]"></div>
+        {/* Products Grid */}
+        <main className="flex-1 min-h-[500px]">
+          {loading ? (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#f08804]"></div>
+            </div>
+          ) : error ? (
+            <div className="bg-white p-8 text-center rounded-lg">
+              <p className="text-red-600">{error}</p>
+              <button
+                onClick={fetchProducts}
+                className="mt-4 bg-[#FFD814] hover:bg-[#F7CA00] px-6 py-2 rounded-lg"
+              >
+                Retry
+              </button>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="bg-white p-8 text-center rounded-lg">
+              <p className="text-gray-600">No products found</p>
+            </div>
+          ) : (
+            <>
+              {/* Results Count */}
+              <div className="mb-4">
+                <p className="text-sm text-gray-600">
+                  1-{products.length} of {products.length} results
+                </p>
               </div>
-            ) : error ? (
-              <div className="bg-white p-8 text-center rounded-lg">
-                <p className="text-red-600">{error}</p>
-                <button
-                  onClick={fetchProducts}
-                  className="mt-4 bg-[#FFD814] hover:bg-[#F7CA00] px-6 py-2 rounded-lg"
-                >
-                  Retry
-                </button>
-              </div>
-            ) : products.length === 0 ? (
-              <div className="bg-white p-8 text-center rounded-lg">
-                <p className="text-gray-600">No products found</p>
-              </div>
-            ) : (
-              <>
-                {/* Results Count */}
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600">
-                    1-{products.length} of {products.length} results
-                  </p>
-                </div>
 
-                {/* Product Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {products.map((product) => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
-                </div>
-              </>
-            )}
-          </main>
-        </div>
+              {/* Product Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+                {products.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            </>
+          )}
+        </main>
       </div>
 
       <Footer />
