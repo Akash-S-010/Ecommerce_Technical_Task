@@ -13,6 +13,7 @@ import SignUp from "./pages/SignUp";
 import VerifyOTP from "./pages/VerifyOTP";
 import BusinessProfile from "./pages/BusinessProfile";
 import AddressManagement from "./pages/AddressManagement";
+import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -64,6 +65,7 @@ const App = () => {
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/business-account" element={<BusinessProfile />} />
         <Route path="/manage-address" element={<AddressManagement />} />
+        <Route path="/products" element={<Products />} />
 
         {/* 404 Not Found - Catch all unmatched routes */}
         <Route path="*" element={<NotFound />} />
