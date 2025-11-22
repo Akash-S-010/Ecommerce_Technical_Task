@@ -9,18 +9,21 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// ------Create a new Razorpay order
+// ------Create a new Razorpay order instance (Helper)
+export const createRazorpayOrderInstance = async (amount, currency, receipt) => {
+  const options = {
+    amount: amount * 100, // amount in smallest currency unit (e.g., paise for INR)
+    currency,
+    receipt,
+  };
+  return await razorpay.orders.create(options);
+};
+
+// ------Create a new Razorpay order (Controller)
 export const createRazorpayOrder = async (req, res) => {
   try {
     const { amount, currency, receipt } = req.body;
-
-    const options = {
-      amount: amount * 100, // amount in smallest currency unit (e.g., paise for INR)
-      currency,
-      receipt,
-    };
-
-    const order = await razorpay.orders.create(options);
+    const order = await createRazorpayOrderInstance(amount, currency, receipt);
 
     res.status(201).json({
       orderId: order.id,
@@ -87,7 +90,10 @@ export const handleRazorpayWebhook = async (req, res) => {
     }
     res.status(200).json({ status: 'ok' });
   } else {
-    console.error('Webhook signature verification failed');
     res.status(403).json({ message: 'Invalid signature' });
   }
+};
+
+export const getRazorpayKey = async (req, res) => {
+  res.status(200).json({ key: process.env.RAZORPAY_KEY_ID });
 };

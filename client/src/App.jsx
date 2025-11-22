@@ -16,6 +16,9 @@ import AddressManagement from "./pages/AddressManagement";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrderSuccessPage from "./pages/OrderSuccessPage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -70,6 +73,9 @@ const App = () => {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/order-success/:id" element={<OrderSuccessPage />} />
+        <Route path="/orders" element={<OrderHistoryPage />} />
 
         {/* 404 Not Found - Catch all unmatched routes */}
         <Route path="*" element={<NotFound />} />

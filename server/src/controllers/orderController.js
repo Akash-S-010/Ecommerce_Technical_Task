@@ -1,7 +1,7 @@
 import Order from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import User from '../models/User.js';
-import { createRazorpayOrder } from './paymentController.js';
+import { createRazorpayOrderInstance } from './paymentController.js';
 
 // -----Place a new order
 export const placeOrder = async (req, res) => {
@@ -53,10 +53,15 @@ export const placeOrder = async (req, res) => {
 
     if (paymentType === 'Razorpay') {
       // Call Razorpay order creation
-      const razorpayOrder = await createRazorpayOrder({ body: { amount: totalPrice, currency: 'INR', receipt: order._id.toString() } }, res);
-      if (razorpayOrder && razorpayOrder.orderId) {
-        order.razorpayOrderId = razorpayOrder.orderId;
-      } else {
+      try {
+        const razorpayOrder = await createRazorpayOrderInstance(totalPrice, 'INR', order._id.toString());
+        if (razorpayOrder && razorpayOrder.id) {
+          order.razorpayOrderId = razorpayOrder.id;
+        } else {
+          throw new Error("Failed to generate Razorpay Order ID");
+        }
+      } catch (err) {
+        console.error("Razorpay Order Creation Error:", err);
         return res.status(500).json({ message: 'Failed to create Razorpay order' });
       }
     }

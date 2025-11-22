@@ -31,7 +31,10 @@ const CartSubtotal = () => {
       </div>
 
       {/* Proceed to Buy Button */}
-      <button className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm mb-4">
+      <button
+        onClick={() => (window.location.href = "/checkout")}
+        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm mb-4"
+      >
         Proceed to Buy
       </button>
 
