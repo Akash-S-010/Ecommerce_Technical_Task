@@ -18,15 +18,15 @@ const Footer = () => {
       {!isAuthenticated && (
         <div className="bg-white py-8 border-t border-gray-200">
           <div className="flex flex-col items-center justify-center gap-1">
-            <p className="text-xs text-gray-700">
+            <p className="text-xl font-bold mb-2 text-gray-700">
               See personalized recommendations
             </p>
             <Link to="/login">
-              <button className="w-60 h-7 bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md text-xs font-bold shadow-sm">
+              <button className="w-60 h-7 bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md text-sm font-semibold shadow-sm">
                 Sign in
               </button>
             </Link>
-            <p className="text-xs text-gray-700 mt-1">
+            <p className="text-sm text-gray-700 mt-1">
               New customer?{" "}
               <Link
                 to="/signup"

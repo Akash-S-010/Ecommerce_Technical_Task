@@ -30,10 +30,10 @@ const Home = () => {
         {/* Product Scroll Sections */}
         <ProductScroll
           title="Related to items you've viewed"
-          products={scrollData}
+          products={scrollData.Clothes  }
         />
 
-        <ProductScroll title="More items to consider" products={scrollData} />
+        <ProductScroll title="More items to consider" products={scrollData.Vehicles} />
       </main>
       <Footer />
     </div>

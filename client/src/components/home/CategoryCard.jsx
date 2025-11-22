@@ -156,49 +156,190 @@ export const homeCardData = [
       },
     ],
   },
-];
-
-export const scrollData = [
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
-    name: "Dress 1",
+    title: "Up to 50% off | Baby care & toys | Amazon Brands",
+    type: "grid",
+    items: [
+      {
+        label: "Baby care",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/PB/GW/PC/PC_QC_372x232_Life-Style_2_1x._SY116_CB788857785_.jpg",
+      },
+      {
+        label: "Toys",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/PB/GW/PC/PC_QC_372x232_Life-Style_1_1x._SY116_CB788857785_.jpg",
+      },
+      {
+        label: "RC toys",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/PB/GW/PC/PC_QC_372x232_Life-Style_3_1x._SY116_CB788857785_.jpg",
+      },
+      {
+        label: "baby safety",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/PB/GW/PC/PC_QC_372x232_Life-Style_4_1x._SY116_CB788857785_.jpg",
+      },
+    ],
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    title: "Starting ₹199 | Amazon Brands & more",
+    type: "grid",
+    items: [
+      {
+        label: "Bedsheets",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img23/PB/March/Bikram/PC_QC_HOME_SIZE_186_2._SY116_CB567468236_.jpg96691_.jpg",
+      },
+      {
+        label: "Curtains",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img23/PB/March/Bikram/PC_QC_HOME_SIZE_186_3._SY116_CB567468236_.jpg96691_.jpg",
+      },
+      {
+        label: "Ironing board & more",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img23/PB/March/Bikram/PC_QC_HOME_SIZE_186_4._SY116_CB567468236_.jpg",
+      },
+      {
+        label: "Home decor",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img23/PB/March/Bikram/PC_QC_HOME_SIZE_186_1._SY116_CB567468236_.jpg",
+      },
+    ],
+  },
+  {
+    title: "Starting ₹99 | Home improvement essentials",
+    type: "grid",
+    items: [
+      {
+        label: "Spin mops, wipes & more",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Glasscare1X._SY116_CB410830553_.jpg68236_.jpg",
+      },
+      {
+        label: "Bathroom hardware",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Rim_tyrecare1x._SY116_CB410830552_.jpg68236_.jpg",
+      },
+      {
+        label: "Hammers, screwdrivers",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Vega_helmet_186x116._SY116_CB405090404_.jpg",
+      },
+      {
+        label: "Extension boards",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img17/Auto/2020/GW/PCQC/Vaccum1x._SY116_CB410830552_.jpg",
+      },
+    ],
+  },
+  {
+    title: "Starting ₹99 | Amazon Brands & more",
+    type: "grid",
+    items: [
+      {
+        label: "Home storage",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG20/Home/2024/Gateway/BTFGW/PCQC/186x116_Home_storage_1._SY116_CB584596691_.jpg",
+      },
+      {
+        label: "Storage & racks",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/IMG20/Home/2024/Gateway/BTFGW/PCQC/New/1x/final/186x116_Home_furnishings_2._SY116_CB555624324_.jpg96691_.jpg",
+      },
+      {
+        label: "Toys & games",
+        image:
+          "https://images-eu.ssl-images-amazon.com/images/G/31/img21/june/CE/GW/QC/PC/PC_QuadCard_boAt_0.5x._SY116_CB553870684_.jpg59060_.jpg",
+      },
+      {
+        label: "Jackets, dresses & ...",
+        image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+      },
+    ],
+  },
+];
+
+export const scrollData = {
+  Clothes:[
+    {
+      image: "https://m.media-amazon.com/images/I/711j0H0oHTL._AC_UL480_FMwebp_QL65_.jpg",
+      name: "Dress 1",
+    },
+  {
+    image: "https://m.media-amazon.com/images/I/71prRprjH0L._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 2",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/81XSwekeTtL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 3",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/71I53evweVL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 4",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/71UpnpTpjTL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 5",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/61mlQStVzfL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 6",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/51aRsmdXJAL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 7",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/51rbO8VrWBL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 8",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/81j0l1uK7UL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 9",
   },
   {
-    image: "https://m.media-amazon.com/images/I/71cflgAolqL._AC_SY400_.jpg",
+    image: "https://m.media-amazon.com/images/I/61a+nBanuDL._AC_UL480_FMwebp_QL65_.jpg",
     name: "Dress 10",
   },
-];
+  ]
+,
+  Vehicles:[
+    {
+      image: "https://m.media-amazon.com/images/I/61cGq20b7XL._AC_UL480_FMwebp_QL65_.jpg",
+      name: "men 1",
+    },
+  {
+    image: "https://m.media-amazon.com/images/I/61D7LStOKGL._AC_UL480_FMwebp_QL65_.jpg",
+    name: "men 2",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71nEy2iSx-L._AC_UL480_FMwebp_QL65_.jpg",
+    name: "men 3",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71YpLqxFChL._AC_UL480_FMwebp_QL65_.jpg",
+    name: "men 4",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/61WswLTIRqL._AC_UL480_FMwebp_QL65_.jpg",
+    name: "men 5",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/812Q6aYyL1L._AC_UL480_FMwebp_QL65_.jpg",
+    name: "men 6",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/61Qto9Vl3OL._AC_UL960_FMwebp_QL65_.jpg",
+    name: "men 7",
+  },
+  {
+    image: "https://m.media-amazon.com/images/I/71BfHmJgTtL._AC_UL480_FMwebp_QL65_.jpg",
+    name: "men 8",
+  },
+  ]
+
+};
 
 export default CategoryCard;
