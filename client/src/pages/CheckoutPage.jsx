@@ -55,6 +55,7 @@ const CheckoutPage = () => {
 
       if (paymentMethod === "COD") {
         toast.success("Order placed successfully!");
+        fetchCart(); // Refresh cart to update header count
         navigate(`/order-success/${response.order._id}`);
       } else {
         // Razorpay Payment Flow
@@ -69,36 +70,15 @@ const CheckoutPage = () => {
           name: "Amazon Clone",
           description: "Test Transaction",
           order_id: response.razorpayOrderId,
-          handler: async function (response) {
+          handler: async function (paymentResponse) {
             try {
-              // Update payment status on backend
-              await orderApi.updatePaymentStatus(
-                orderData.orderId || response.razorpay_order_id,
-                "paid"
-              );
-              // Actually, let's use the order ID we got from placeOrder response if possible,
-              // but inside this callback 'response' is from Razorpay.
-              // We need the original order ID.
+              await orderApi.updatePaymentStatus(response.order._id, "paid");
             } catch (e) {
               console.error("Payment status update failed", e);
             }
-
-            // We can also call updatePaymentStatus using the order ID from the outer scope
-            // But better to rely on the webhook or just redirect.
-            // For this demo, let's try to update it.
-            try {
-              // We need the order ID from the initial API call
-              // The 'response' variable here shadows the outer 'response'.
-              // Let's rename the outer response or use the one from closure.
-              // But 'response' from placeOrder is available here via closure?
-              // No, 'response' is the argument name.
-              // Let's fix this in the code below.
-            } catch (e) {}
-
             toast.success("Payment Successful!");
-            // We need the order ID here.
-            // The order ID is in the outer 'response' variable, but it is shadowed.
-            // I will fix variable naming in the actual code.
+            fetchCart(); // Refresh cart to update header count
+            navigate(`/order-success/${response.order._id}`);
           },
           prefill: {
             name: user.name,
@@ -110,26 +90,12 @@ const CheckoutPage = () => {
           },
         };
 
-        // Fix for the shadowed variable issue:
-        options.handler = async function (paymentResponse) {
-          try {
-            await orderApi.updatePaymentStatus(response.order._id, "paid");
-          } catch (e) {
-            console.error("Payment status update failed", e);
-          }
-          toast.success("Payment Successful!");
-          navigate(`/order-success/${response.order._id}`);
-        };
-
         const rzp1 = new window.Razorpay(options);
         rzp1.on("payment.failed", function (response) {
           toast.error(response.error.description);
         });
         rzp1.open();
       }
-
-      // Clear cart (optional, backend might handle this or we need a store action)
-      // fetchCart(); // Refresh cart to show empty
     } catch (error) {
       console.error("Order placement failed:", error);
       toast.error(error.response?.data?.message || "Failed to place order");

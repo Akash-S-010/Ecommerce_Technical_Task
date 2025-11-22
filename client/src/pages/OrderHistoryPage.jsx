@@ -84,6 +84,25 @@ const OrderHistoryPage = () => {
                         {order.address.label}
                       </div>
                     </div>
+                    <div>
+                      <div className="uppercase text-xs font-bold">
+                        Payment Status
+                      </div>
+                      <div
+                        className={`font-bold ${
+                          order.paymentType === "Razorpay" &&
+                          order.paymentStatus === "paid"
+                            ? "text-green-600"
+                            : "text-gray-600"
+                        }`}
+                      >
+                        {order.paymentType === "Razorpay"
+                          ? order.paymentStatus === "paid"
+                            ? "Paid"
+                            : "Pending"
+                          : "Pay on Delivery"}
+                      </div>
+                    </div>
                   </div>
                   <div>
                     <div className="uppercase text-xs font-bold">
@@ -98,7 +117,12 @@ const OrderHistoryPage = () => {
                 {/* Order Items */}
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-2 text-[#067D62]">
-                    {order.orderStatus}
+                    Arriving by{" "}
+                    {new Date(
+                      new Date(order.createdAt).setDate(
+                        new Date(order.createdAt).getDate() + 5
+                      )
+                    ).toLocaleDateString()}
                   </h3>
                   {order.items.map((item, idx) => (
                     <div key={idx} className="flex gap-4 mt-4">

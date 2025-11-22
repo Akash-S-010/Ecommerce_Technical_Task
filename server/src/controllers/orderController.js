@@ -1,6 +1,7 @@
 import Order from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import User from '../models/User.js';
+import Cart from '../models/Cart.js';
 import { createRazorpayOrderInstance } from './paymentController.js';
 
 // -----Place a new order
@@ -69,6 +70,9 @@ export const placeOrder = async (req, res) => {
     await order.save();
 
     await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
+
+    // Clear the user's cart
+    await Cart.findOneAndUpdate({ user: userId }, { items: [] });
 
     res.status(201).json({
       message: 'Order placed successfully',
