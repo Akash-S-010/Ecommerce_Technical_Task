@@ -5,13 +5,19 @@ import Footer from "../components/layout/Footer";
 import CategoryNav from "../components/products/CategoryNav";
 import productApi from "../api/productApi";
 import { MapPin, Lock, ShieldCheck } from "lucide-react";
+import ReviewModal from "../components/products/ReviewModal";
+import toast from "react-hot-toast";
+import useAuthStore from "../store/useAuthStore";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const { user } = useAuthStore();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,6 +38,21 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [id]);
+
+  const handleReviewSubmit = async (reviewData) => {
+    try {
+      setIsSubmittingReview(true);
+      const response = await productApi.addProductReview(id, reviewData);
+      setProduct(response.product); // Update product with new review
+      setIsReviewModalOpen(false);
+      toast.success("Review submitted successfully");
+    } catch (err) {
+      console.error("Error submitting review:", err);
+      toast.error(err.response?.data?.message || "Failed to submit review");
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -221,41 +242,75 @@ const ProductDetails = () => {
 
             <div className="border-t border-gray-200 my-2"></div>
 
-            {/* About this item */}
+            {/* Description */}
             <div>
-              <h3 className="font-bold text-base mb-2">About this item</h3>
-              <ul className="list-disc pl-5 space-y-1 text-sm text-gray-900">
-                <li>{product.description}</li>
-                <li>High performance and durability for long-lasting use.</li>
-                <li>Premium quality materials ensuring reliability.</li>
-                <li>Designed to meet your daily needs efficiently.</li>
-                <li>Comes with manufacturer warranty.</li>
-              </ul>
+              <h3 className="font-bold text-base mb-2">Description</h3>
+              <div className="text-sm text-gray-900 whitespace-pre-line">
+                {product.description}
+              </div>
             </div>
           </div>
 
           {/* Right Column: Buy Box */}
           <div className="lg:w-[20%]">
             <div className="border border-gray-300 rounded-lg p-4 shadow-sm">
-              <div className="text-3xl font-medium text-gray-900 mb-2">
-                <sup className="text-sm">₹</sup>
-                {formatPrice(product.price)}
-              </div>
-
-              <div className="text-sm text-gray-600 mb-4">
-                FREE delivery{" "}
-                <span className="font-bold text-gray-900">{deliveryDate}</span>.
-                <br />
-                <span className="text-amazon-link hover:underline cursor-pointer">
-                  Details
+              <div className="text-3xl font-medium text-gray-900 mb-2 flex">
+                <span className="text-sm ">₹</span>
+                {Math.floor(product.price)}
+                <span className="text-sm">
+                  {(product.price % 1).toFixed(2).substring(2)}
                 </span>
               </div>
 
-              <div className="text-xl text-[#007600] font-medium mb-4">
-                In stock
+              <div className="text-sm text-gray-600 mb-2">
+                Free delivery{" "}
+                <span className="font-bold text-gray-900">6-9 October</span>.
               </div>
 
-              <div className="space-y-3">
+              <div className="text-sm text-amazon-link hover:underline cursor-pointer mb-4">
+                Details
+              </div>
+
+              <Link
+                to="/manage-address"
+                className="flex items-start gap-2 text-xs text-amazon-link hover:underline cursor-pointer mb-4"
+              >
+                <MapPin className="w-4 h-4 text-gray-900 mt-0.5" />
+                <div>
+                  Delivery to {user?.addresses?.[0]?.city || "Select Location"}{" "}
+                  - Update Location
+                </div>
+              </Link>
+
+              <div className="text-lg text-[#B12704] font-medium mb-2">
+                Usually ships within 4 to 5 days
+              </div>
+
+              <div className="bg-gray-100 border border-gray-300 rounded p-2 mb-4 relative">
+                <div className="text-xs font-bold mb-1">
+                  International Shipping
+                </div>
+                <div className="text-xs text-gray-600">
+                  Ships from outside the India.
+                </div>
+                <div className="text-xs text-amazon-link hover:underline cursor-pointer mt-1">
+                  Learn more
+                </div>
+                <div className="absolute -right-2 top-2 w-4 h-4 bg-white transform rotate-45 border-t border-r border-gray-300"></div>
+              </div>
+
+              <div className="mb-4">
+                <select className="w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm bg-[#F0F2F2] hover:bg-[#E3E6E6] cursor-pointer focus:ring-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none">
+                  <option>Quantity: 1</option>
+                  {[...Array(9)].map((_, i) => (
+                    <option key={i + 2} value={i + 2}>
+                      {i + 2}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-3 mb-4">
                 <button className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm">
                   Add to Cart
                 </button>
@@ -264,22 +319,25 @@ const ProductDetails = () => {
                 </button>
               </div>
 
-              <div className="mt-4 text-xs text-gray-600 space-y-2">
+              <div className="text-xs text-gray-600 space-y-2 mb-4">
                 <div className="grid grid-cols-[auto_1fr] gap-x-2">
                   <span className="text-gray-500">Ships from</span>
-                  <span>Amazon</span>
+                  <span>Monatik LLC</span>
                   <span className="text-gray-500">Sold by</span>
                   <span className="text-amazon-link hover:underline cursor-pointer">
-                    Appario Retail Private Ltd
+                    Monatik LLC
+                  </span>
+                  <span className="text-gray-500">Payment</span>
+                  <span className="text-amazon-link hover:underline cursor-pointer">
+                    Secure transaction
                   </span>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <div className="flex items-center gap-2 text-amazon-link text-sm hover:underline cursor-pointer">
-                  <Lock className="w-4 h-4" />
-                  Secure transaction
-                </div>
+              <div className="pt-4 border-t border-gray-200">
+                <button className="w-full border border-gray-300 rounded-md py-1 text-sm hover:bg-gray-50 text-center px-3 shadow-sm">
+                  Add to Wishlist
+                </button>
               </div>
             </div>
           </div>
@@ -336,7 +394,10 @@ const ProductDetails = () => {
               <p className="text-sm text-gray-900 mb-4">
                 Share your thoughts with other customers
               </p>
-              <button className="w-full border border-gray-300 rounded-lg py-1.5 text-sm hover:bg-gray-50">
+              <button
+                onClick={() => setIsReviewModalOpen(true)}
+                className="w-full border border-gray-300 rounded-lg py-1.5 text-sm hover:bg-gray-50"
+              >
                 Write a product review
               </button>
             </div>
@@ -354,12 +415,12 @@ const ProductDetails = () => {
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs text-gray-500">
-                        {review.name
-                          ? review.name.charAt(0).toUpperCase()
+                        {review.user?.name
+                          ? review.user.name.charAt(0).toUpperCase()
                           : "U"}
                       </div>
                       <span className="text-sm font-medium">
-                        {review.name || "Amazon Customer"}
+                        {review.user?.name || "Amazon Customer"}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 mb-2">
@@ -395,7 +456,8 @@ const ProductDetails = () => {
                       Verified Purchase
                     </div>
                     <p className="text-sm text-gray-900 mb-4">
-                      {review.comment}
+                      Important:{" "}
+                      <span className="font-medium">{review.title}</span>
                     </p>
                     <div className="text-sm text-gray-500 mb-2">
                       One person found this helpful
@@ -420,6 +482,13 @@ const ProductDetails = () => {
         </div>
       </main>
       <Footer />
+
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        onSubmit={handleReviewSubmit}
+        loading={isSubmittingReview}
+      />
     </div>
   );
 };

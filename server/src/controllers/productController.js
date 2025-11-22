@@ -16,7 +16,7 @@ export const createProduct = async (req, res) => {
     });
 
     const createdProduct = await product.save();
-    res.status(201).json({product:createdProduct,message:"Product created successfully"});  
+    res.status(201).json({ product: createdProduct, message: "Product created successfully" });
   } catch (error) {
     console.error('Error creating product:', error);
     return res.status(500).json({ message: 'Server error' });
@@ -38,7 +38,7 @@ export const getAllProducts = async (req, res) => {
 //-----product details
 export const getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('reviews.user', 'name');
 
     if (product) {
       res.status(200).json(product);
@@ -95,9 +95,12 @@ export const addProductReview = async (req, res) => {
 
     await product.save();
 
+    // Re-fetch to populate user details
+    const updatedProduct = await Product.findById(id).populate('reviews.user', 'name');
+
     res.status(201).json({
       message: 'Review added successfully',
-      product,
+      product: updatedProduct,
     });
   } catch (error) {
     console.error('Error adding product review:', error);
