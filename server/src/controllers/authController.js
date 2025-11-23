@@ -2,6 +2,9 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import { sendOTPEmail } from '../utils/mailer.js';
 import { generateToken } from '../utils/Token.js';
+import { OAuth2Client } from 'google-auth-library';
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
 // -----User Signup---------
@@ -267,3 +270,90 @@ export const checkUser = async (req, res) => {
     return res.status(500).json({ message: 'Server error fetching user' });
   }
 }
+
+
+// -----Google OAuth Authentication---------
+export const googleAuth = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      console.log('❌ No credential provided');
+      return res.status(400).json({ message: 'No credential provided' });
+    }
+
+    // Check if GOOGLE_CLIENT_ID is set
+    if (!process.env.GOOGLE_CLIENT_ID) {
+      console.log('❌ GOOGLE_CLIENT_ID not set in environment variables');
+      return res.status(500).json({ message: 'Server configuration error' });
+    }
+
+    console.log('✓ Verifying Google token...');
+    console.log('Expected audience:', process.env.GOOGLE_CLIENT_ID);
+
+    // Verify the Google token
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { sub: googleId, email, name } = payload;
+
+    console.log('✓ Token verified successfully for:', email);
+
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (user) {
+      console.log('✓ User exists:', email);
+      // User exists - check if it's a Google account
+      if (!user.googleId) {
+        // User registered with email/password, link Google account
+        user.googleId = googleId;
+        await user.save();
+        console.log('✓ Linked Google account to existing user');
+      }
+    } else {
+      console.log('✓ Creating new user:', email);
+      // Create new user with Google account
+      user = new User({
+        name,
+        email,
+        googleId,
+        isVerified: true, // Google accounts are pre-verified
+      });
+      await user.save();
+      console.log('✓ New user created successfully');
+    }
+
+    // Generate JWT token
+    const token = generateToken(user._id, user.email);
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    };
+
+    res
+      .cookie('token', token, cookieOptions)
+      .status(200).json({
+        message: 'Google login successful',
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          addresses: user.addresses,
+        }
+      });
+  } catch (error) {
+    console.error('❌ Google auth error:', error.message);
+    console.error('Full error:', error);
+    return res.status(500).json({
+      message: 'Server error during Google authentication',
+      error: error.message
+    });
+  }
+};
