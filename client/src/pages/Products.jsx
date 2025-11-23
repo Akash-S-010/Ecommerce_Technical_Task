@@ -17,6 +17,7 @@ const Products = () => {
   const [filters, setFilters] = useState({
     search: "",
     brands: [],
+    categories: [],
     priceRange: null,
     rating: null,
   });
@@ -42,14 +43,21 @@ const Products = () => {
       );
     }
 
-    // 2. Brand Filter
+    // 2. Category Filter
+    if (filters.categories.length > 0) {
+      result = result.filter((product) =>
+        filters.categories.includes(product.category)
+      );
+    }
+
+    // 3. Brand Filter
     if (filters.brands.length > 0) {
       result = result.filter((product) =>
         filters.brands.includes(product.brand)
       );
     }
 
-    // 3. Price Range Filter
+    // 4. Price Range Filter
     if (filters.priceRange) {
       const [min, max] = filters.priceRange.split("-").map(Number);
       result = result.filter(
@@ -57,7 +65,7 @@ const Products = () => {
       );
     }
 
-    // 4. Sorting
+    // 5. Sorting
     switch (sortBy) {
       case "price-low-high":
         result.sort((a, b) => a.price - b.price);
@@ -104,6 +112,12 @@ const Products = () => {
     return [...new Set(brands)];
   }, [allProducts]);
 
+  // Extract unique categories from all products
+  const availableCategories = useMemo(() => {
+    const categories = allProducts.map((p) => p.category).filter(Boolean);
+    return [...new Set(categories)];
+  }, [allProducts]);
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Header />
@@ -116,6 +130,7 @@ const Products = () => {
             filters={filters}
             onFilterChange={handleFilterChange}
             availableBrands={availableBrands}
+            availableCategories={availableCategories}
           />
         </aside>
 
@@ -171,6 +186,7 @@ const Products = () => {
                   setFilters({
                     search: "",
                     brands: [],
+                    categories: [],
                     priceRange: null,
                     rating: null,
                   })

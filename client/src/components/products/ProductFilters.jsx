@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
-const ProductFilters = ({ filters, onFilterChange, availableBrands }) => {
+const ProductFilters = ({
+  filters,
+  onFilterChange,
+  availableBrands,
+  availableCategories,
+}) => {
   const [searchTerm, setSearchTerm] = useState(filters.search || "");
 
   // Debounce search input
@@ -27,6 +32,14 @@ const ProductFilters = ({ filters, onFilterChange, availableBrands }) => {
       ? currentBrands.filter((b) => b !== brand)
       : [...currentBrands, brand];
     onFilterChange("brands", newBrands);
+  };
+
+  const handleCategoryChange = (category) => {
+    const currentCategories = filters.categories || [];
+    const newCategories = currentCategories.includes(category)
+      ? currentCategories.filter((c) => c !== category)
+      : [...currentCategories, category];
+    onFilterChange("categories", newCategories);
   };
 
   return (
@@ -75,6 +88,31 @@ const ProductFilters = ({ filters, onFilterChange, availableBrands }) => {
               <span>{range.label}</span>
             </label>
           ))}
+        </div>
+      </div>
+
+      {/* Categories */}
+      <div className="border-t pt-4">
+        <h3 className="font-bold text-base mb-3">Category</h3>
+        <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+          {!availableCategories || availableCategories.length === 0 ? (
+            <p className="text-gray-500 text-xs">No categories available</p>
+          ) : (
+            availableCategories.map((category, index) => (
+              <label
+                key={index}
+                className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]"
+              >
+                <input
+                  type="checkbox"
+                  checked={(filters.categories || []).includes(category)}
+                  onChange={() => handleCategoryChange(category)}
+                  className="w-4 h-4 text-[#e77600] rounded focus:ring-[#e77600]"
+                />
+                <span className="capitalize">{category}</span>
+              </label>
+            ))
+          )}
         </div>
       </div>
 
