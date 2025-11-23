@@ -16,62 +16,18 @@ React-based frontend for the e-commerce application with modern UI/UX, built usi
 
 ## 📁 Project Structure
 
-```
-client/
-├── public/                 # Static assets
-├── src/
-│   ├── api/               # API service layer
-│   │   ├── addressApi.js  # Address CRUD operations
-│   │   ├── authApi.js     # Authentication APIs
-│   │   ├── cartApi.js     # Cart management
-│   │   ├── orderApi.js    # Order operations
-│   │   └── productApi.js  # Product APIs
-│   │
-│   ├── components/        # Reusable components
-│   │   ├── auth/         # Authentication components
-│   │   ├── cart/         # Cart components
-│   │   ├── detailspage/  # Product details components
-│   │   ├── home/         # Homepage components
-│   │   ├── layout/       # Layout components (Header, Footer)
-│   │   ├── products/     # Product listing components
-│   │   └── ui/           # Reusable UI components
-│   │
-│   ├── config/
-│   │   └── axios.js      # Axios instance configuration
-│   │
-│   ├── data/             # Static data
-│   │   └── ...           # Product data, categories, etc.
-│   │
-│   ├── pages/            # Page components
-│   │   ├── AddProductPage.jsx
-│   │   ├── AddressManagement.jsx
-│   │   ├── CartPage.jsx
-│   │   ├── CheckoutPage.jsx
-│   │   ├── Home.jsx
-│   │   ├── Login.jsx
-│   │   ├── OrderHistoryPage.jsx
-│   │   ├── OrderSuccess.jsx
-│   │   ├── ProductDetails.jsx
-│   │   ├── Products.jsx
-│   │   ├── Signup.jsx
-│   │   └── VerifyOtp.jsx
-│   │
-│   ├── store/            # Zustand stores
-│   │   ├── useAuthStore.js   # Authentication state
-│   │   └── useCartStore.js   # Cart state
-│   │
-│   ├── App.jsx           # Main App component with routing
-│   ├── index.css         # Global styles and Tailwind config
-│   └── main.jsx          # Entry point with GoogleOAuthProvider
-│
-├── .env                  # Environment variables
-├── .env.example          # Environment variables template
-├── index.html            # HTML template
-├── package.json          # Dependencies
-├── vite.config.js        # Vite configuration
-├── vercel.json           # Vercel deployment config
-└── README.md             # This file
-```
+**Main Directories:**
+
+- public/ - Static assets
+- src/api/ - API service layer (addressApi, authApi, cartApi, orderApi, productApi)
+- src/components/ - Reusable components (auth, cart, detailspage, home, layout, products, ui)
+- src/config/ - Axios instance configuration
+- src/data/ - Static data (product data, categories, etc.)
+- src/pages/ - Page components (AddProductPage, AddressManagement, CartPage, CheckoutPage, Home, Login, OrderHistoryPage, OrderSuccess, ProductDetails, Products, Signup, VerifyOtp)
+- src/store/ - Zustand stores (useAuthStore, useCartStore)
+- App.jsx - Main App component with routing
+- index.css - Global styles and Tailwind config
+- main.jsx - Entry point with GoogleOAuthProvider
 
 ## 🎨 Key Components
 
@@ -97,7 +53,6 @@ client/
 
 - **AuthLayout.jsx** - Layout wrapper for auth pages
 - **AuthCard.jsx** - Card component for auth forms
-- **GoogleButton.jsx** - Custom Google sign-in button (deprecated)
 
 ### UI Components
 
@@ -108,42 +63,27 @@ client/
 
 ### useAuthStore
 
-```javascript
-{
-  user: null,
-  isAuthenticated: false,
-  isLoading: false,
-  error: null,
+Manages user authentication state with methods:
 
-  // Methods
-  signup(userData)
-  verifyOtp(otpData)
-  login(credentials)
-  checkAuth()
-  logout()
-  updateProfile(profileData)
-  setUser(user)  // For Google OAuth
-  addAddress(addressData)
-  updateAddress(addressId, addressData)
-  deleteAddress(addressId)
-}
-```
+- signup(userData)
+- verifyOtp(otpData)
+- login(credentials)
+- checkAuth()
+- logout()
+- updateProfile(profileData)
+- setUser(user) - For Google OAuth
+- addAddress(addressData)
+- updateAddress(addressId, addressData)
+- deleteAddress(addressId)
 
 ### useCartStore
 
-```javascript
-{
-  cart: { items: [], totalItems: 0, totalPrice: 0 },
-  isLoading: false,
-  error: null,
+Manages shopping cart state with methods:
 
-  // Methods
-  fetchCart()
-  addToCart(productId, quantity)
-  updateCartItem(productId, quantity)
-  removeFromCart(productId)
-}
-```
+- fetchCart()
+- addToCart(productId, quantity)
+- updateCartItem(productId, quantity)
+- removeFromCart(productId)
 
 ## 🌐 Routes
 
@@ -171,44 +111,42 @@ client/
 
 ### Installation
 
-```bash
-# Navigate to client directory
-cd client
+Navigate to client directory:
 
-# Install dependencies
-npm install
-```
+- cd client
+
+Install dependencies:
+
+- npm install
 
 ### Environment Variables
 
 Create a `.env` file:
 
-```env
-VITE_API_URL=http://localhost:5001/api
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
-```
+- VITE_API_URL=http://localhost:5001/api
+- VITE_GOOGLE_CLIENT_ID=your_google_client_id
 
 ### Development
 
-```bash
-npm run dev
-```
+Run development server:
+
+- npm run dev
 
 App runs on `http://localhost:5173`
 
 ### Build
 
-```bash
-npm run build
-```
+Build for production:
+
+- npm run build
 
 Output in `dist/` folder
 
 ### Preview Production Build
 
-```bash
-npm run preview
-```
+Preview the build:
+
+- npm run preview
 
 ## 📦 API Integration
 
@@ -218,34 +156,20 @@ All API calls are centralized in the `src/api/` directory using Axios instance w
 - Credentials included for cookies
 - Consistent error handling
 
-Example:
-
-```javascript
-// src/config/axios.js
-const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5001/api",
-  withCredentials: true,
-});
-```
-
 ## 🎨 Styling System
 
 ### Tailwind CSS Configuration
 
 - Custom color palette:
-  - `--color-amazon-orange`: #FFD814
-  - `--color-amazon-navbar`: #131921
-  - `--color-amazon-link`: #007185
-- Responsive breakpoints: `sm`, `md`, `lg`, `xl`
-- Custom animations: `fadeInUp`, `checkmark-circle`
+  - --color-amazon-orange: #FFD814
+  - --color-amazon-navbar: #131921
+  - --color-amazon-link: #007185
+- Responsive breakpoints: sm, md, lg, xl
+- Custom animations: fadeInUp, checkmark-circle
 
 ### Reusable Button Component
 
-```jsx
-<Button variant="primary">Click Me</Button>
-<Button variant="secondary">Cancel</Button>
-<Button variant="link">Learn More</Button>
-```
+Available variants: primary, secondary, link
 
 ## 🔒 Authentication Flow
 
@@ -282,14 +206,14 @@ const axiosInstance = axios.create({
 
 ## 🌐 Deployment (Vercel)
 
-```bash
-npm run build
-```
+Build the project:
+
+- npm run build
 
 Deploy to Vercel with environment variables:
 
-- `VITE_API_URL`
-- `VITE_GOOGLE_CLIENT_ID`
+- VITE_API_URL
+- VITE_GOOGLE_CLIENT_ID
 
 ---
 
