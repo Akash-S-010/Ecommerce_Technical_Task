@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { CheckCircle, Package } from "lucide-react";
+import { Package } from "lucide-react";
 import orderApi from "../api/orderApi";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import AnimatedCheckmark from "../components/common/AnimatedCheckmark";
 
 const OrderSuccessPage = () => {
   const { id } = useParams();
@@ -58,17 +59,19 @@ const OrderSuccessPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Header />
 
-      <main className="max-w-[800px] mx-auto p-4 flex-1 w-full">
-        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+      <main className="max-w-[800px] mx-auto p-4 flex-1 w-full min-h-screen">
+        <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm animate-fade-in-up">
           <div className="flex flex-col items-center text-center mb-8">
-            <CheckCircle className="w-16 h-16 text-green-600 mb-4" />
-            <h1 className="text-2xl font-bold text-[#067D62] mb-2">
+            <AnimatedCheckmark />
+            <h1 className="text-2xl font-bold text-[#067D62] mb-2 animate-fade-in-up animate-delay-100 opacity-0">
               Order Placed Successfully!
             </h1>
-            <p className="text-gray-600">Thank you for shopping with us.</p>
+            <p className="text-gray-600 animate-fade-in-up animate-delay-200 opacity-0">
+              Thank you for shopping with us.
+            </p>
           </div>
 
-          <div className="border-t border-b border-gray-200 py-4 mb-6">
+          <div className="border-t border-b border-gray-200 py-4 mb-6 animate-fade-in-up animate-delay-300 opacity-0">
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Order ID:</span>
               <span className="font-medium">{order._id}</span>
@@ -91,7 +94,7 @@ const OrderSuccessPage = () => {
             </div>
           </div>
 
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in-up animate-delay-300 opacity-0">
             <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
               <Package className="w-5 h-5" /> Delivery Details
             </h3>
@@ -105,7 +108,7 @@ const OrderSuccessPage = () => {
             </div>
           </div>
 
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-4 animate-fade-in-up animate-delay-300 opacity-0">
             <Link
               to="/orders"
               className="bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md px-6 py-2 text-sm shadow-sm font-medium"
