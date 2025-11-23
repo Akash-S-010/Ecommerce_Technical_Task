@@ -108,18 +108,6 @@ const Header = () => {
             {isAuthenticated ? (
               <>
                 <Link
-                  to="/business-account"
-                  className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
-                >
-                  <User className="w-4 h-4" /> Your Account
-                </Link>
-                <Link
-                  to="/orders"
-                  className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
-                >
-                  <ShoppingBagIcon className="w-4 h-4" /> Your Orders
-                </Link>
-                <Link
                   to="/add-product"
                   className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
                 >
