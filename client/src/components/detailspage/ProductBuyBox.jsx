@@ -2,18 +2,33 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import useCartStore from "../../store/useCartStore";
+import useAuthStore from "../../store/useAuthStore";
 import Button from "../ui/Button";
 
 const ProductBuyBox = ({ product, user }) => {
   const navigate = useNavigate();
   const { addToCart } = useCartStore();
+  const { isAuthenticated } = useAuthStore();
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     const success = await addToCart(product._id, quantity);
     if (success) {
       navigate("/cart");
     }
+  };
+
+  const handleBuyNow = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    // Add to cart and go to checkout
+    handleAddToCart();
   };
 
   return (
@@ -86,6 +101,7 @@ const ProductBuyBox = ({ product, user }) => {
               Add to Cart
             </Button>
             <Button
+              onClick={handleBuyNow}
               variant="secondary"
               className="rounded-full bg-[#FFA41C] hover:bg-[#FA8900] border-[#FF8F00] text-black min-h-[48px] sm:min-h-0"
             >

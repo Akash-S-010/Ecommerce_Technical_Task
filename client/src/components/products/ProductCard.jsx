@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCartStore from "../../store/useCartStore";
+import useAuthStore from "../../store/useAuthStore";
 import Button from "../ui/Button";
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
   const { addToCart } = useCartStore();
+  const { isAuthenticated } = useAuthStore();
   const { _id, Title, price, images, rating, numReviews, brand } = product;
 
   // Calculate discount percentage (dummy for now)
@@ -115,10 +118,13 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Add to Cart Button */}
-      {/* Add to Cart Button */}
       <Button
         onClick={(e) => {
           e.preventDefault();
+          if (!isAuthenticated) {
+            navigate("/login");
+            return;
+          }
           addToCart(_id);
         }}
         variant="primary"

@@ -68,19 +68,19 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Location - Hidden on mobile */}
+        {/* Location - Now visible on mobile */}
         <Link
           to="/manage-address"
-          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden md:flex items-center gap-1 leading-tight"
+          className="border border-transparent hover:border-white rounded-sm p-1 sm:p-2 cursor-pointer flex items-center gap-1 leading-tight"
         >
-          <MapPin className="w-4 h-4 mt-2" />
+          <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mt-2" />
           <div className="flex flex-col">
-            <span className="text-xs text-gray-300 ml-0.5">
+            <span className="text-[10px] sm:text-xs text-gray-300 ml-0.5 hidden sm:inline">
               {isAuthenticated && user?.addresses?.length > 0
                 ? `Delivering to ${user.addresses[0].city} ${user.addresses[0].pincode}`
                 : "Delivering to"}
             </span>
-            <span className="text-sm font-bold">Update location</span>
+            <span className="text-xs sm:text-sm font-bold">Update</span>
           </div>
         </Link>
 
@@ -118,14 +118,16 @@ const Header = () => {
           <ChevronDown className="w-3 h-3 text-gray-400" />
         </div>
 
-        {/* Account & Lists - Hidden on small mobile */}
-        <div className="relative group border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden sm:block">
+        {/* Account & Lists - Now visible on mobile */}
+        <div className="relative group border border-transparent hover:border-white rounded-sm p-1 sm:p-2 cursor-pointer leading-tight">
           <Link to={isAuthenticated ? "" : "/login"}>
-            <div className="text-xs text-gray-300 truncate max-w-[100px] lg:max-w-none">
+            <div className="text-[10px] sm:text-xs text-gray-300 truncate max-w-[60px] sm:max-w-[100px] lg:max-w-none">
               {greetingText}
             </div>
-            <div className="text-sm font-bold flex items-center gap-0.5">
-              Account & Lists <ChevronDown className="w-3 h-3 text-gray-400" />
+            <div className="text-xs sm:text-sm font-bold flex items-center gap-0.5">
+              <span className="hidden sm:inline">Account & Lists</span>
+              <span className="sm:hidden">Account</span>
+              <ChevronDown className="w-3 h-3 text-gray-400" />
             </div>
           </Link>
 
@@ -166,13 +168,13 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Returns & Orders - Hidden on mobile */}
+        {/* Returns & Orders - Now visible on tablet and mobile */}
         <Link
           to="/orders"
-          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden md:block"
+          className="border border-transparent hover:border-white rounded-sm p-1 sm:p-2 cursor-pointer leading-tight hidden sm:block"
         >
-          <div className="text-xs text-gray-300">Returns</div>
-          <div className="text-sm font-bold">& Orders</div>
+          <div className="text-[10px] sm:text-xs text-gray-300">Returns</div>
+          <div className="text-xs sm:text-sm font-bold">& Orders</div>
         </Link>
 
         {/* Cart */}
