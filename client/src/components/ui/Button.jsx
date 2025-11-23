@@ -10,7 +10,7 @@ const Button = ({
   className = "",
 }) => {
   const baseStyles =
-    "py-[7px] px-4 text-[13px] rounded-[3px] font-normal transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
+    "py-2 sm:py-[7px] px-4 text-sm sm:text-[13px] rounded-[3px] font-normal transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer min-h-[44px] sm:min-h-0 flex items-center justify-center";
 
   const variants = {
     primary:

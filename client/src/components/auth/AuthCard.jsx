@@ -6,7 +6,9 @@ import React from "react";
  */
 const AuthCard = ({ children, className = "" }) => {
   return (
-    <div className={`border w-md border-gray-300 rounded-lg p-6 ${className}`}>
+    <div
+      className={`border w-full max-w-md border-gray-300 rounded-lg p-4 sm:p-6 ${className}`}
+    >
       {children}
     </div>
   );

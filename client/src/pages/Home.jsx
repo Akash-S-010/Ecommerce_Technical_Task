@@ -15,11 +15,11 @@ const Home = () => {
   return (
     <div className="bg-[#eaeded] min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 max-w-[1500px] mx-auto w-full relative pb-5" onClick={()=>navigate("/products")}>
+      <main className="flex-1 max-w-[1500px] mx-auto w-full relative pb-5">
         <HeroSlider />
 
         {/* Category Cards Grid - Overlapping the slider */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-5 -mt-20 md:-mt-40 lg:-mt-60 relative z-10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-5 -mt-20 md:-mt-40 lg:-mt-60 relative z-1 0 mb-10" onClick={()=>navigate("/products")}>
           {homeCardData.map((card, index) => (
             <CategoryCard
               key={index}

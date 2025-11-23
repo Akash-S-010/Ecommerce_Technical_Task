@@ -17,9 +17,9 @@ const ProductBuyBox = ({ product, user }) => {
   };
 
   return (
-    <div className="lg:w-[20%]">
-      <div className="border border-gray-300 rounded-lg p-4 shadow-sm">
-        <div className="text-3xl font-medium text-gray-900 mb-2 flex">
+    <div className="w-full lg:w-[20%]">
+      <div className="border border-gray-300 rounded-lg p-3 sm:p-4 shadow-sm">
+        <div className="text-2xl sm:text-3xl font-medium text-gray-900 mb-2 flex">
           <span className="text-sm ">₹</span>
           {Math.floor(product.price)}
           <span className="text-sm">
@@ -38,16 +38,16 @@ const ProductBuyBox = ({ product, user }) => {
 
         <Link
           to="/manage-address"
-          className="flex items-start gap-2 text-xs text-amazon-link hover:underline cursor-pointer mb-4"
+          className="flex items-start gap-2 text-xs sm:text-sm text-amazon-link hover:underline cursor-pointer mb-4"
         >
-          <MapPin className="w-4 h-4 text-gray-900 mt-0.5" />
+          <MapPin className="w-4 h-4 text-gray-900 mt-0.5 shrink-0" />
           <div>
             Delivery to {user?.addresses?.[0]?.city || "Select Location"} -
             Update Location
           </div>
         </Link>
 
-        <div className="text-lg text-[#B12704] font-medium mb-2">
+        <div className="text-base sm:text-lg text-[#B12704] font-medium mb-2">
           Usually ships within 4 to 5 days
         </div>
 
@@ -66,7 +66,7 @@ const ProductBuyBox = ({ product, user }) => {
           <select
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}
-            className="w-full border border-gray-300 rounded-md shadow-sm py-1 px-2 text-sm bg-[#F0F2F2] hover:bg-[#E3E6E6] cursor-pointer focus:ring-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none"
+            className="w-full border border-gray-300 rounded-md shadow-sm py-2 sm:py-1 px-2 text-sm bg-[#F0F2F2] hover:bg-[#E3E6E6] cursor-pointer focus:ring-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none min-h-[48px] sm:min-h-0"
           >
             {[...Array(9)].map((_, i) => (
               <option key={i + 1} value={i + 1}>
@@ -81,13 +81,13 @@ const ProductBuyBox = ({ product, user }) => {
             <Button
               onClick={handleAddToCart}
               variant="primary"
-              className="rounded-full"
+              className="rounded-full min-h-[48px] sm:min-h-0"
             >
               Add to Cart
             </Button>
             <Button
               variant="secondary"
-              className="rounded-full bg-[#FFA41C] hover:bg-[#FA8900] border-[#FF8F00] text-black"
+              className="rounded-full bg-[#FFA41C] hover:bg-[#FA8900] border-[#FF8F00] text-black min-h-[48px] sm:min-h-0"
             >
               Buy Now
             </Button>
@@ -110,7 +110,7 @@ const ProductBuyBox = ({ product, user }) => {
         </div>
 
         <div className="pt-4 border-t border-gray-200">
-          <button className="w-full border border-gray-300 rounded-md py-1 text-sm hover:bg-gray-50 text-center px-3 shadow-sm">
+          <button className="w-full border border-gray-300 rounded-md py-2 sm:py-1 text-sm hover:bg-gray-50 text-center px-3 shadow-sm min-h-[48px] sm:min-h-0">
             Add to Wishlist
           </button>
         </div>

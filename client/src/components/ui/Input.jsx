@@ -29,11 +29,11 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className={`w-full px-2 py-[6px] text-[13px] border ${
+        className={`w-full px-3 sm:px-2 py-2 sm:py-[6px] text-sm sm:text-[13px] border ${
           error
             ? "border-red-500 shadow-[0_0_3px_2px_rgba(220,53,69,0.4)]"
             : "border-gray-300"
-        } rounded-[3px] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)]`}
+        } rounded-[3px] focus:outline-none focus:border-[#e77600] focus:shadow-[0_0_3px_2px_rgba(228,121,17,0.5)] min-h-[44px] sm:min-h-0`}
       />
       {helperText && <p className="mt-1 text-xs text-gray-600">{helperText}</p>}
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MapPin,
   Search,
@@ -8,6 +8,7 @@ import {
   LogOut,
   Plus,
   User,
+  X,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/useAuthStore";
@@ -17,6 +18,8 @@ const Header = () => {
   const { user, isAuthenticated, logout } = useAuthStore();
   const { cart, fetchCart } = useCartStore();
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -27,6 +30,7 @@ const Header = () => {
   const handleLogout = () => {
     logout();
     navigate("/login");
+    setIsMobileMenuOpen(false);
   };
 
   const greetingText = isAuthenticated
@@ -36,7 +40,19 @@ const Header = () => {
   return (
     <header className="w-full z-50">
       {/* Top Bar */}
-      <div className="bg-[#131921] text-white h-[60px] flex items-center px-4 gap-2">
+      <div className="bg-[#131921] text-white h-[60px] flex items-center px-2 sm:px-4 gap-1 sm:gap-2 relative">
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden border border-transparent hover:border-white rounded-sm p-2 cursor-pointer"
+        >
+          {isMobileMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
+        </button>
+
         {/* Logo */}
         <Link
           to="/"
@@ -45,14 +61,14 @@ const Header = () => {
           <img
             src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"
             alt="Amazon"
-            className="h-8 object-contain"
+            className="h-6 sm:h-8 object-contain"
           />
           <span className="text-xs font-bold -mt-3 ml-0.5 text-gray-300">
             .in
           </span>
         </Link>
 
-        {/* Location */}
+        {/* Location - Hidden on mobile */}
         <Link
           to="/manage-address"
           className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden md:flex items-center gap-1 leading-tight"
@@ -68,7 +84,7 @@ const Header = () => {
           </div>
         </Link>
 
-        {/* Search Bar */}
+        {/* Search Bar - Desktop */}
         <div className="flex-1 h-10 hidden sm:flex rounded-md overflow-hidden focus-within:ring-3 focus-within:ring-[#f3a847]">
           <div className="bg-[#f3f3f3] text-gray-600 px-3 flex items-center text-xs border-r border-gray-300 cursor-pointer hover:bg-[#dadada] transition-colors">
             All <ChevronDown className="w-3 h-3 ml-1" />
@@ -83,7 +99,15 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Language */}
+        {/* Mobile Search Toggle */}
+        <button
+          onClick={() => setIsSearchOpen(!isSearchOpen)}
+          className="sm:hidden border border-transparent hover:border-white rounded-sm p-2 cursor-pointer"
+        >
+          <Search className="w-5 h-5" />
+        </button>
+
+        {/* Language - Hidden on mobile and tablet */}
         <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer hidden lg:flex items-center gap-1">
           <img
             src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
@@ -94,10 +118,12 @@ const Header = () => {
           <ChevronDown className="w-3 h-3 text-gray-400" />
         </div>
 
-        {/* Account & Lists */}
-        <div className="relative group border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight">
+        {/* Account & Lists - Hidden on small mobile */}
+        <div className="relative group border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden sm:block">
           <Link to={isAuthenticated ? "" : "/login"}>
-            <div className="text-xs text-gray-300">{greetingText}</div>
+            <div className="text-xs text-gray-300 truncate max-w-[100px] lg:max-w-none">
+              {greetingText}
+            </div>
             <div className="text-sm font-bold flex items-center gap-0.5">
               Account & Lists <ChevronDown className="w-3 h-3 text-gray-400" />
             </div>
@@ -140,10 +166,10 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Returns & Orders */}
+        {/* Returns & Orders - Hidden on mobile */}
         <Link
           to="/orders"
-          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden sm:block"
+          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden md:block"
         >
           <div className="text-xs text-gray-300">Returns</div>
           <div className="text-sm font-bold">& Orders</div>
@@ -152,11 +178,11 @@ const Header = () => {
         {/* Cart */}
         <Link
           to="/cart"
-          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer flex items-end relative"
+          className="border border-transparent hover:border-white rounded-sm p-1 sm:p-2 cursor-pointer flex items-end relative"
         >
           <div className="relative">
-            <ShoppingCart className="w-8 h-8" />
-            <span className="absolute -top-1 right-0 text-[#f08804] font-bold text-sm bg-[#131921] rounded-full w-5 h-5 flex items-center justify-center">
+            <ShoppingCart className="w-6 h-6 sm:w-8 sm:h-8" />
+            <span className="absolute -top-1 right-0 text-[#f08804] font-bold text-xs sm:text-sm bg-[#131921] rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
               {cart.totalItems}
             </span>
           </div>
@@ -164,10 +190,133 @@ const Header = () => {
         </Link>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="bg-[#232f3e] text-white h-[40px] flex items-center px-4 gap-4 text-sm overflow-x-auto no-scrollbar">
+      {/* Mobile Search Bar */}
+      {isSearchOpen && (
+        <div className="sm:hidden bg-[#131921] px-2 pb-2">
+          <div className="flex h-10 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-[#f3a847]">
+            <input
+              type="text"
+              placeholder="Search Amazon.in"
+              className="flex-1 px-3 text-black outline-none placeholder-gray-500 bg-white"
+            />
+            <div className="bg-[#febd69] hover:bg-[#f3a847] w-11 flex items-center justify-center cursor-pointer transition-colors">
+              <Search className="w-5 h-5 text-gray-800" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <div
+            className="bg-white w-[80%] max-w-[350px] h-full overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-[#232f3e] text-white p-4">
+              <div className="flex items-center gap-2">
+                <User className="w-8 h-8" />
+                <div>
+                  <div className="font-bold text-lg">{greetingText}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 space-y-4">
+              {/* Account Section */}
+              <div>
+                <h3 className="font-bold text-lg mb-2">Your Account</h3>
+                <div className="space-y-2">
+                  {isAuthenticated ? (
+                    <>
+                      <Link
+                        to="/orders"
+                        className="block py-2 text-gray-700 hover:text-[#C7511F]"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Returns & Orders
+                      </Link>
+                      <Link
+                        to="/manage-address"
+                        className="block py-2 text-gray-700 hover:text-[#C7511F]"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Manage Addresses
+                      </Link>
+                      <Link
+                        to="/add-product"
+                        className="block py-2 text-gray-700 hover:text-[#C7511F]"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Add Product
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full text-left py-2 text-red-600 hover:text-red-700"
+                      >
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/login"
+                        className="block py-2 text-gray-700 hover:text-[#C7511F]"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        to="/signup"
+                        className="block py-2 text-gray-700 hover:text-[#C7511F]"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Create Account
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Categories */}
+              <div className="border-t pt-4">
+                <h3 className="font-bold text-lg mb-2">Shop by Category</h3>
+                <div className="space-y-2">
+                  {[
+                    "Amazon miniTV",
+                    "Sell",
+                    "Best Sellers",
+                    "Mobiles",
+                    "Today's Deals",
+                    "Customer Service",
+                    "Electronics",
+                    "Prime",
+                    "New Releases",
+                    "Home & Kitchen",
+                    "Gift Ideas",
+                  ].map((item) => (
+                    <div
+                      key={item}
+                      className="py-2 text-gray-700 hover:text-[#C7511F] cursor-pointer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom Bar - Horizontal scroll on mobile */}
+      <div className="bg-[#232f3e] text-white h-[40px] flex items-center px-2 sm:px-4 gap-2 sm:gap-4 text-xs sm:text-sm overflow-x-auto no-scrollbar">
         <div className="flex items-center gap-1 font-bold cursor-pointer border border-transparent hover:border-white p-1 rounded-sm whitespace-nowrap">
-          <Menu className="w-5 h-5" /> All
+          <Menu className="w-4 h-4 sm:w-5 sm:h-5" /> All
         </div>
         {[
           "Amazon miniTV",
