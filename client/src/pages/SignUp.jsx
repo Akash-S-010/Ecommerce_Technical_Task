@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import AuthLayout from "../components/layout/AuthLayout";
 import AuthCard from "../components/auth/AuthCard";
 import AuthDivider from "../components/auth/AuthDivider";
-import GoogleButton from "../components/auth/GoogleButton";
 import AuthFooterLinks from "../components/auth/AuthFooterLinks";
 import useAuthStore from "../store/useAuthStore";
+import authApi from "../api/authApi";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { signup, isLoading, clearError } = useAuthStore();
+  const { signup, setUser, isLoading, clearError } = useAuthStore();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,9 +40,23 @@ const SignUp = () => {
     }
   };
 
-  const handleGoogleSignup = () => {
-    // TODO: Handle Google OAuth
-    console.log("Google signup");
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const result = await authApi.googleAuth(credentialResponse.credential);
+
+      if (result.user) {
+        setUser(result.user);
+        toast.success(result.message || "Google signup successful!");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Google signup error:", error);
+      toast.error(error.response?.data?.message || "Google signup failed");
+    }
+  };
+
+  const handleGoogleError = () => {
+    toast.error("Google signup failed. Please try again.");
   };
 
   return (
@@ -127,8 +142,16 @@ const SignUp = () => {
       {/* Google Signup */}
       <div className="mt-6">
         <AuthDivider text="or" />
-        <div className="mt-4">
-          <GoogleButton onClick={handleGoogleSignup} />
+        <div className="mt-4 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            text="signup_with"
+            shape="rectangular"
+            theme="outline"
+            size="large"
+            width="350"
+          />
         </div>
       </div>
     </AuthLayout>

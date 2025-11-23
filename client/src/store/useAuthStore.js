@@ -179,6 +179,9 @@ const useAuthStore = create((set) => ({
 
   // clear erors
   clearError: () => set({ error: null }),
+
+  // Set user directly (for Google OAuth)
+  setUser: (user) => set({ user, isAuthenticated: true }),
 }));
 
 export default useAuthStore;

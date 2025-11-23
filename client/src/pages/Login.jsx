@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 import toast from "react-hot-toast";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import AuthLayout from "../components/layout/AuthLayout";
 import AuthCard from "../components/auth/AuthCard";
 import AuthDivider from "../components/auth/AuthDivider";
-import GoogleButton from "../components/auth/GoogleButton";
 import useAuthStore from "../store/useAuthStore";
 import { ChevronRight } from "lucide-react";
+import authApi from "../api/authApi";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, isLoading, clearError } = useAuthStore();
+  const { login, setUser, isLoading, clearError } = useAuthStore();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,9 +34,23 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    // TODO: Handle Google OAuth
-    console.log("Google login");
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const result = await authApi.googleAuth(credentialResponse.credential);
+
+      if (result.user) {
+        setUser(result.user);
+        toast.success(result.message || "Google login successful!");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Google login error:", error);
+      toast.error(error.response?.data?.message || "Google login failed");
+    }
+  };
+
+  const handleGoogleError = () => {
+    toast.error("Google login failed. Please try again.");
   };
 
   return (
@@ -151,8 +166,16 @@ const Login = () => {
       {/* Google Login */}
       <div className="mt-6">
         <AuthDivider text="or" />
-        <div className="mt-4">
-          <GoogleButton onClick={handleGoogleLogin} />
+        <div className="mt-4 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            text="continue_with"
+            shape="rectangular"
+            theme="outline"
+            size="large"
+            width="350"
+          />
         </div>
       </div>
     </AuthLayout>

@@ -37,6 +37,12 @@ const authApi = {
         const response = await axiosInstance.post('/auth/logout');
         return response.data;
     },
+
+    // Google OAuth authentication
+    googleAuth: async (credential) => {
+        const response = await axiosInstance.post('/auth/google', { credential });
+        return response.data;
+    },
 };
 
 export default authApi;
