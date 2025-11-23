@@ -23,6 +23,7 @@ import AddProductPage from "./pages/AddProductPage";
 import NotFound from "./pages/NotFound";
 
 import ScrollToTop from "./components/layout/ScrollToTop";
+import { Weight } from "lucide-react";
 
 const App = () => {
   const { checkAuth, isCheckingAuth } = useAuthStore();
@@ -49,6 +50,8 @@ const App = () => {
           style: {
             background: "#fff",
             color: "#333",
+            borderRadius: "5px",
+            fontWeight: "500",
           },
           success: {
             iconTheme: {
