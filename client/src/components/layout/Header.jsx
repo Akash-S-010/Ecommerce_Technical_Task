@@ -1,18 +1,33 @@
 import React, { useEffect } from "react";
-import { MapPin, Search, ShoppingCart, Menu, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import {
+  MapPin,
+  Search,
+  ShoppingCart,
+  Menu,
+  ChevronDown,
+  LogOut,
+  Plus,
+  User,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/useAuthStore";
 import useCartStore from "../../store/useCartStore";
 
 const Header = () => {
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, logout } = useAuthStore();
   const { cart, fetchCart } = useCartStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
       fetchCart();
     }
   }, [isAuthenticated, fetchCart]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const greetingText = isAuthenticated
     ? `Hello, ${user?.name}`
@@ -61,7 +76,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search Amazon.in"
-            className="flex-1 px-3 text-black outline-none placeholder-gray-500"
+            className="flex-1 px-3 text-black outline-none placeholder-gray-500 bg-white"
           />
           <div className="bg-[#febd69] hover:bg-[#f3a847] w-11 flex items-center justify-center cursor-pointer transition-colors">
             <Search className="w-5 h-5 text-gray-800" />
@@ -80,21 +95,71 @@ const Header = () => {
         </div>
 
         {/* Account & Lists */}
-        <Link
-          to={isAuthenticated ? "/profile" : "/login"}
-          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight"
-        >
-          <div className="text-xs text-gray-300">{greetingText}</div>
-          <div className="text-sm font-bold flex items-center gap-0.5">
-            Account & Lists <ChevronDown className="w-3 h-3 text-gray-400" />
+        <div className="relative group border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight">
+          <Link to={isAuthenticated ? "/business-account" : "/login"}>
+            <div className="text-xs text-gray-300">{greetingText}</div>
+            <div className="text-sm font-bold flex items-center gap-0.5">
+              Account & Lists <ChevronDown className="w-3 h-3 text-gray-400" />
+            </div>
+          </Link>
+
+          {/* Dropdown Menu */}
+          <div className="absolute top-full right-0 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block z-50 text-black border border-gray-200">
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/business-account"
+                  className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                >
+                  <User className="w-4 h-4" /> Your Account
+                </Link>
+                <Link
+                  to="/orders"
+                  className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                >
+                  <ShoppingBagIcon className="w-4 h-4" /> Your Orders
+                </Link>
+                <Link
+                  to="/add-product"
+                  className="px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" /> Add Product
+                </Link>
+                <div className="border-t my-1"></div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 text-red-600"
+                >
+                  <LogOut className="w-4 h-4" /> Sign Out
+                </button>
+              </>
+            ) : (
+              <div className="px-4 py-2 text-center">
+                <Link
+                  to="/login"
+                  className="block bg-[#FFD814] hover:bg-[#F7CA00] text-black text-sm font-medium py-1 rounded-md mb-2"
+                >
+                  Sign in
+                </Link>
+                <p className="text-xs text-gray-600">
+                  New customer?{" "}
+                  <Link to="/signup" className="text-blue-600 hover:underline">
+                    Start here.
+                  </Link>
+                </p>
+              </div>
+            )}
           </div>
-        </Link>
+        </div>
 
         {/* Returns & Orders */}
-        <div className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden sm:block">
+        <Link
+          to="/orders"
+          className="border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight hidden sm:block"
+        >
           <div className="text-xs text-gray-300">Returns</div>
           <div className="text-sm font-bold">& Orders</div>
-        </div>
+        </Link>
 
         {/* Cart */}
         <Link
@@ -140,5 +205,25 @@ const Header = () => {
     </header>
   );
 };
+
+// Helper Icon Component since ShoppingBag isn't imported from lucide-react in the top import
+const ShoppingBagIcon = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+    <path d="M3 6h18" />
+    <path d="M16 10a4 4 0 0 1-8 0" />
+  </svg>
+);
 
 export default Header;

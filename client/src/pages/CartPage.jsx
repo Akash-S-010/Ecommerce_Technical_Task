@@ -6,6 +6,7 @@ import useCartStore from "../store/useCartStore.js";
 import CartItem from "../components/cart/CartItem";
 import CartSubtotal from "../components/cart/CartSubtotal";
 import DetailedProductScroll from "../components/home/DetailedProductScroll";
+import { detailedScrollData } from "../data/detailedScrollData";
 
 const CartPage = () => {
   const { cart, fetchCart, isLoading } = useCartStore();
@@ -45,7 +46,10 @@ const CartPage = () => {
               {cart.items.length === 0 ? (
                 <div className="py-8">
                   <p className="text-lg mb-4">Your Amazon Cart is empty.</p>
-                  <Link to="/products" className="text-amazon-link hover:underline">
+                  <Link
+                    to="/products"
+                    className="text-amazon-link hover:underline"
+                  >
                     Shop today's deals
                   </Link>
                 </div>
@@ -122,7 +126,10 @@ const CartPage = () => {
 
         {/* Bottom Recommendations */}
         <div className="mt-8">
-          <DetailedProductScroll title="You might also like" />
+          <DetailedProductScroll
+            title="You might also like"
+            products={detailedScrollData}
+          />
         </div>
       </main>
 

@@ -8,12 +8,14 @@ import { detailedScrollData } from "../data/detailedScrollData";
 import ProductScroll from "../components/home/ProductScroll";
 import DetailedProductScroll from "../components/home/DetailedProductScroll";
 import Footer from "../components/layout/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#eaeded] min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 max-w-[1500px] mx-auto w-full relative pb-5">
+      <main className="flex-1 max-w-[1500px] mx-auto w-full relative pb-5" onClick={()=>navigate("/products")}>
         <HeroSlider />
 
         {/* Category Cards Grid - Overlapping the slider */}
