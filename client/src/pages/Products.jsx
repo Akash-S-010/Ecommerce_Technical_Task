@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { Filter, X } from "lucide-react";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import CategoryNav from "../components/products/CategoryNav";
@@ -12,6 +13,7 @@ const Products = () => {
   const [filteredProducts, setFilteredProducts] = useState([]); // Store products to display
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // Mobile filter toggle
 
   // Filter State
   const [filters, setFilters] = useState({
@@ -123,9 +125,41 @@ const Products = () => {
       <Header />
       <CategoryNav />
 
-      <div className="flex-1 flex max-w-[1500px] mx-auto w-full items-start gap-4 p-4">
-        {/* Filters Sidebar - Sticky */}
-        <aside className="w-64 shrink-0 sticky top-4 h-[calc(100vh-2rem)] overflow-y-auto bg-white rounded-lg shadow-sm">
+      <div className="flex-1 flex max-w-[1500px] mx-auto w-full items-start gap-4 p-2 sm:p-4">
+        {/* Mobile Filter Toggle Button */}
+        <button
+          onClick={() => setIsFilterOpen(!isFilterOpen)}
+          className="lg:hidden fixed bottom-4 right-4 z-40 bg-[#131921] text-white p-4 rounded-full shadow-lg hover:bg-[#232f3e] transition-colors"
+        >
+          <Filter className="w-6 h-6" />
+        </button>
+
+        {/* Filters Sidebar - Sticky on desktop, slide-in on mobile */}
+        <aside
+          className={`
+            fixed lg:sticky top-0 left-0 h-full lg:h-[calc(100vh-2rem)] 
+            w-[280px] sm:w-64 lg:w-64 shrink-0 lg:top-4 
+            overflow-y-auto bg-white rounded-none lg:rounded-lg shadow-lg lg:shadow-sm
+            z-50 lg:z-auto
+            transition-transform duration-300 ease-in-out
+            ${
+              isFilterOpen
+                ? "translate-x-0"
+                : "-translate-x-full lg:translate-x-0"
+            }
+          `}
+        >
+          {/* Mobile Close Button */}
+          <div className="lg:hidden flex justify-between items-center p-4 border-b border-gray-200 bg-[#131921] text-white">
+            <h2 className="font-bold text-lg">Filters</h2>
+            <button
+              onClick={() => setIsFilterOpen(false)}
+              className="p-1 hover:bg-[#37475a] rounded"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
           <ProductFilters
             filters={filters}
             onFilterChange={handleFilterChange}
@@ -134,22 +168,32 @@ const Products = () => {
           />
         </aside>
 
+        {/* Overlay for mobile */}
+        {isFilterOpen && (
+          <div
+            className="lg:hidden fixed inset-0 backdrop-blur-sm bg-opacity-50 z-40"
+            onClick={() => setIsFilterOpen(false)}
+          />
+        )}
+
         {/* Products Grid */}
         <main className="flex-1 min-h-[500px]">
           {/* Header & Sort */}
-          <div className="bg-white p-4 rounded-lg shadow-sm mb-4 flex justify-between items-center">
-            <p className="text-sm text-gray-600">
+          <div className="bg-white p-3 sm:p-4 rounded-lg shadow-sm mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+            <p className="text-xs sm:text-sm text-gray-600">
               {filteredProducts.length > 0
                 ? `1-${filteredProducts.length} of ${filteredProducts.length} results`
                 : "No results found"}
             </p>
 
-            <div className="flex items-center gap-2">
-              <label className="text-sm text-gray-600">Sort by:</label>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <label className="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
+                Sort by:
+              </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-sm border border-gray-300 rounded p-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none"
+                className="flex-1 sm:flex-none text-xs sm:text-sm border border-gray-300 rounded p-1.5 sm:p-1 focus:ring-[#e77600] focus:border-[#e77600] outline-none min-h-[44px] sm:min-h-0"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low-high">Price: Low to High</option>
@@ -197,7 +241,7 @@ const Products = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-8">
               {filteredProducts.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
