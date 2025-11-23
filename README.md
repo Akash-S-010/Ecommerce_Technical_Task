@@ -134,38 +134,27 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) e-commerce application w
 
 ## 📁 Project Structure
 
-```
-Ecommerce_Technical_Task/
-├── client/                 # Frontend React application
-│   ├── public/            # Static assets
-│   ├── src/
-│   │   ├── api/          # API service layer
-│   │   ├── components/   # Reusable React components
-│   │   ├── config/       # Configuration files (axios)
-│   │   ├── data/         # Static data
-│   │   ├── pages/        # Page components
-│   │   ├── store/        # Zustand state management
-│   │   ├── App.jsx       # Main App component
-│   │   └── main.jsx      # Entry point
-│   ├── .env              # Environment variables
-│   ├── package.json      # Dependencies
-│   ├── vite.config.js    # Vite configuration
-│   └── vercel.json       # Vercel deployment config
-│
-├── server/                # Backend Node.js application
-│   ├── src/
-│   │   ├── config/       # Database and configuration
-│   │   ├── controllers/  # Route controllers
-│   │   ├── middlewares/  # Custom middlewares
-│   │   ├── models/       # Mongoose schemas
-│   │   ├── routes/       # API routes
-│   │   └── utils/        # Utility functions
-│   ├── .env              # Environment variables
-│   ├── server.js         # Entry point
-│   └── package.json      # Dependencies
-│
-└── README.md             # Project documentation
-```
+**Client Directory:**
+
+- public/ - Static assets
+- src/api/ - API service layer
+- src/components/ - Reusable React components
+- src/config/ - Configuration files (axios)
+- src/data/ - Static data
+- src/pages/ - Page components
+- src/store/ - Zustand state management
+- App.jsx - Main App component
+- main.jsx - Entry point
+
+**Server Directory:**
+
+- src/config/ - Database and configuration
+- src/controllers/ - Route controllers
+- src/middlewares/ - Custom middlewares
+- src/models/ - Mongoose schemas
+- src/routes/ - API routes
+- src/utils/ - Utility functions
+- server.js - Entry point
 
 ---
 
@@ -258,73 +247,72 @@ Ecommerce_Technical_Task/
 
 #### 1. Clone the Repository
 
-```bash
-git clone https://github.com/Akash-S-010/Ecommerce_Technical_Task.git
-cd Ecommerce_Technical_Task
-```
+Clone the repository:
+
+- git clone https://github.com/Akash-S-010/Ecommerce_Technical_Task.git
+- cd Ecommerce_Technical_Task
 
 #### 2. Setup Backend
 
-```bash
-cd server
-npm install
-```
+Navigate to server directory and install dependencies:
 
-Create `.env` file in `server/` directory:
+- cd server
+- npm install
 
-```env
-# Server Configuration
-PORT=5001
-NODE_ENV=development
+Create `.env` file in `server/` directory with the following variables:
 
-# Client URL
-CLIENT_URL=http://localhost:5173
+**Server Configuration:**
 
-# Database
-MONGO_URI=your_mongodb_connection_string
+- PORT=5001
+- NODE_ENV=development
 
-# JWT Secret
-JWT_SECRET=your_jwt_secret_key
+**Client URL:**
 
-# Google OAuth
-GOOGLE_CLIENT_ID=your_google_client_id
+- CLIENT_URL=http://localhost:5173
 
-# Email Configuration
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_email_app_password
+**Database:**
 
-# Razorpay
-RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-```
+- MONGO_URI=your_mongodb_connection_string
+
+**JWT Secret:**
+
+- JWT_SECRET=your_jwt_secret_key
+
+**Google OAuth:**
+
+- GOOGLE_CLIENT_ID=your_google_client_id
+
+**Email Configuration:**
+
+- EMAIL_USER=your_email@gmail.com
+- EMAIL_PASS=your_email_app_password
+
+**Razorpay:**
+
+- RAZORPAY_KEY_ID=your_razorpay_key_id
+- RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 
 Start the server:
 
-```bash
-npm run dev
-```
+- npm run dev
 
 Server runs on `http://localhost:5001`
 
 #### 3. Setup Frontend
 
-```bash
-cd client
-npm install
-```
+Navigate to client directory and install dependencies:
 
-Create `.env` file in `client/` directory:
+- cd client
+- npm install
 
-```env
-VITE_API_URL=http://localhost:5001/api
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
-```
+Create `.env` file in `client/` directory with:
+
+- VITE_API_URL=http://localhost:5001/api
+- VITE_GOOGLE_CLIENT_ID=your_google_client_id
 
 Start the client:
 
-```bash
-npm run dev
-```
+- npm run dev
 
 Client runs on `http://localhost:5173`
 
@@ -345,26 +333,26 @@ Client runs on `http://localhost:5173`
 
 ### Frontend (Vercel)
 
-```bash
-cd client
-npm run build
-```
+Build the client:
+
+- cd client
+- npm run build
 
 Deploy to Vercel and set environment variables:
 
-- `VITE_API_URL`
-- `VITE_GOOGLE_CLIENT_ID`
+- VITE_API_URL
+- VITE_GOOGLE_CLIENT_ID
 
 ### Backend (Render)
 
 Deploy to Render and set environment variables:
 
-- `MONGO_URI`
-- `JWT_SECRET`
-- `GOOGLE_CLIENT_ID`
-- `CLIENT_URL`
-- `EMAIL_USER`, `EMAIL_PASS`
-- `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`
+- MONGO_URI
+- JWT_SECRET
+- GOOGLE_CLIENT_ID
+- CLIENT_URL
+- EMAIL_USER, EMAIL_PASS
+- RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET
 
 ---
 
