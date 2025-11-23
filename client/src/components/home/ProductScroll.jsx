@@ -23,7 +23,7 @@ const ProductScroll = ({ title, linkText = "See more", products = [] }) => {
         <h2 className="text-xl font-bold text-[#0F1111]">{title}</h2>
         {linkText && (
           <Link
-            to="#"
+            to="/products"
             className="text-sm text-amazon-link hover:text-[#C7511F] hover:underline"
           >
             {linkText}
@@ -45,11 +45,12 @@ const ProductScroll = ({ title, linkText = "See more", products = [] }) => {
           ref={scrollRef}
           className="flex overflow-x-auto gap-4 scroll-smooth no-scrollbar pb-4"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          onClick={() => navigate("/products")}
         >
           {products.map((product, index) => (
             <Link
               key={index}
-              to="#"
+              to="/products"
               className="min-w-[200px] max-w-[200px] flex flex-col cursor-pointer"
             >
               <div className="bg-gray-100 h-[200px] flex items-center justify-center mb-2 p-2">

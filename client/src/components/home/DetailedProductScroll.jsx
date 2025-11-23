@@ -67,7 +67,7 @@ const DetailedProductScroll = ({
               {/* Details */}
               <div className="flex flex-col gap-1">
                 <Link
-                  to="#"
+                  to="/products"
                   className="text-amazon-link hover:text-[#C7511F] hover:underline text-sm font-medium leading-snug line-clamp-2"
                 >
                   {product.title}
