@@ -6,15 +6,17 @@ import addressApi from '../api/addressApi.js';
 const useAuthStore = create((set) => ({
   user: null,
   isAuthenticated: false,
-  isLoading: true, 
+  isCheckingAuth: true, // New state for initial auth check
+  isLoading: false, // General loading state for actions
   error: null,
-  tempEmail: null, // Store email temporarily for OTP verification
+  tempEmail: localStorage.getItem('tempEmail') || null, // Store email temporarily for OTP verification
 
   // Signup User
   signup: async (userData) => {
     set({ isLoading: true, error: null });
     try {
       const response = await authApi.signup(userData);
+      localStorage.setItem('tempEmail', userData.email);
       set({
         isLoading: false,
         tempEmail: userData.email // Store email for OTP verification
@@ -32,6 +34,7 @@ const useAuthStore = create((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await authApi.verifyOtp(otpData);
+      localStorage.removeItem('tempEmail');
       set({
         user: response.user,
         isAuthenticated: true,
@@ -136,20 +139,20 @@ const useAuthStore = create((set) => ({
 
   //   Check if user is authenticated
   checkAuth: async () => {
-    set({ isLoading: true, error: null });
+    set({ isCheckingAuth: true, error: null });
     try {
       const user = await authApi.checkAuth();
       set({
         user,
         isAuthenticated: true,
-        isLoading: false,
+        isCheckingAuth: false,
       });
       return { success: true };
     } catch (error) {
       set({
         user: null,
         isAuthenticated: false,
-        isLoading: false,
+        isCheckingAuth: false,
       });
       return { success: false };
     }

@@ -10,19 +10,23 @@ import useAuthStore from "../store/useAuthStore";
 
 const VerifyOTP = () => {
   const navigate = useNavigate();
-  const { verifyOtp, isLoading, clearError, tempEmail } = useAuthStore();
+  const { verifyOtp, isLoading, clearError, tempEmail, isAuthenticated } =
+    useAuthStore();
 
   const [otp, setOtp] = useState("");
+
+  React.useEffect(() => {
+    if (!tempEmail && !isAuthenticated) {
+      toast.error("Email not found. Please sign up again.");
+      navigate("/signup");
+    }
+  }, [tempEmail, isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     clearError();
 
-    if (!tempEmail) {
-      toast.error("Email not found. Please sign up again.");
-      navigate("/signup");
-      return;
-    }
+    if (!tempEmail) return;
 
     const result = await verifyOtp({ email: tempEmail, otp });
 

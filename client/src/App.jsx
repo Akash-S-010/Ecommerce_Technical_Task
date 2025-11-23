@@ -22,13 +22,13 @@ import OrderHistoryPage from "./pages/OrderHistoryPage";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
-  const { checkAuth, isLoading } = useAuthStore();
+  const { checkAuth, isCheckingAuth } = useAuthStore();
 
   React.useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  if (isLoading) {
+  if (isCheckingAuth) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#f08804]"></div>
