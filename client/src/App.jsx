@@ -21,6 +21,8 @@ import OrderSuccessPage from "./pages/OrderSuccessPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import NotFound from "./pages/NotFound";
 
+import ScrollToTop from "./components/layout/ScrollToTop";
+
 const App = () => {
   const { checkAuth, isCheckingAuth } = useAuthStore();
 
@@ -38,6 +40,7 @@ const App = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <Toaster
         position="top-right"
         toastOptions={{
