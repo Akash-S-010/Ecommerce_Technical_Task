@@ -45,28 +45,9 @@ const CartPage = () => {
               {cart.items.length === 0 ? (
                 <div className="py-8">
                   <p className="text-lg mb-4">Your Amazon Cart is empty.</p>
-                  <Link to="/" className="text-amazon-link hover:underline">
+                  <Link to="/products" className="text-amazon-link hover:underline">
                     Shop today's deals
                   </Link>
-
-                  <div className="mt-8 flex gap-4">
-                    {!localStorage.getItem("token") && (
-                      <>
-                        <Link
-                          to="/login"
-                          className="bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md px-4 py-1.5 text-sm shadow-sm text-gray-900"
-                        >
-                          Sign in to your account
-                        </Link>
-                        <Link
-                          to="/signup"
-                          className="border border-gray-300 rounded-md px-4 py-1.5 text-sm hover:bg-gray-50 text-gray-900"
-                        >
-                          Sign up now
-                        </Link>
-                      </>
-                    )}
-                  </div>
                 </div>
               ) : (
                 <div className="space-y-0">

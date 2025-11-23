@@ -1,90 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Search } from "lucide-react";
 
-const ProductFilters = ({ onFilterChange }) => {
-  const [selectedFilters, setSelectedFilters] = useState({
-    deliveryDay: null,
-    rating: null,
-    brands: [],
-    priceRange: null,
-    discount: null,
-    condition: "new",
-    payOnDelivery: false,
-  });
+const ProductFilters = ({ filters, onFilterChange, availableBrands }) => {
+  const [searchTerm, setSearchTerm] = useState(filters.search || "");
 
-  const brands = [
-    "Samsung",
-    "LG",
-    "Haier",
-    "Daikin",
-    "Godrej",
-    "IFB",
-    "Panasonic",
-    "DAWLANCE ELECTRONICS PRIVATE LIMITED",
-    "Intelli Retail",
-    "DIGI WORLD ELECTRONICS",
-    "Kitchen Brand Store",
-    "LOVEHOME RETAIL",
-  ];
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onFilterChange("search", searchTerm);
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timer);
+  }, [searchTerm, onFilterChange]);
 
   const priceRanges = [
-    { label: "Under ₹10,000", value: "0-10000" },
+    { label: "Under ₹500", value: "0-500" },
+    { label: "₹500 - ₹1,000", value: "500-1000" },
+    { label: "₹1,000 - ₹10,000", value: "1000-10000" },
     { label: "₹10,000 - ₹20,000", value: "10000-20000" },
-    { label: "₹20,000 - ₹30,000", value: "20000-30000" },
-    { label: "₹30,000 - ₹50,000", value: "30000-50000" },
-    { label: "Over ₹50,000", value: "50000-999999" },
+    { label: "Over ₹20,000", value: "20000-999999" },
   ];
 
-  const discounts = [
-    { label: "10% off or more", value: 10 },
-    { label: "25% off or more", value: 25 },
-    { label: "35% off or more", value: 35 },
-    { label: "50% off or more", value: 50 },
-    { label: "70% off or more", value: 70 },
-  ];
+  const handleBrandChange = (brand) => {
+    const currentBrands = filters.brands || [];
+    const newBrands = currentBrands.includes(brand)
+      ? currentBrands.filter((b) => b !== brand)
+      : [...currentBrands, brand];
+    onFilterChange("brands", newBrands);
+  };
 
   return (
-    <div className="w-64 bg-white p-4 space-y-6 text-sm">
-      {/* Delivery Day */}
+    <div className="w-64 bg-white p-4 space-y-6 text-sm border-r border-gray-200 h-full overflow-x-hidden">
+      {/* Search */}
       <div>
-        <h3 className="font-bold text-base mb-3">Delivery Day</h3>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="radio" name="delivery" className="w-4 h-4" />
-          <span>Get it in 2 Days</span>
-        </label>
-      </div>
-
-      {/* Customer Reviews */}
-      <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Customer Reviews</h3>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="rating" className="w-4 h-4" />
-            <div className="flex items-center gap-1">
-              <div className="flex text-[#FFA41C]">
-                {[...Array(4)].map((_, i) => (
-                  <span key={i}>★</span>
-                ))}
-                <span className="text-gray-300">★</span>
-              </div>
-              <span className="text-gray-600">& up</span>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      {/* Brands */}
-      <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Brands</h3>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
-          {brands.map((brand, index) => (
-            <label
-              key={index}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <input type="checkbox" className="w-4 h-4" />
-              <span className="text-sm">{brand}</span>
-            </label>
-          ))}
+        <h3 className="font-bold text-base mb-3">Search</h3>
+        <div className="relative">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search products..."
+            className="w-full p-2 pl-8 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e77600] focus:border-transparent outline-none"
+          />
+          <Search className="w-4 h-4 text-gray-400 absolute left-2.5 top-2.5" />
         </div>
       </div>
 
@@ -92,102 +50,112 @@ const ProductFilters = ({ onFilterChange }) => {
       <div className="border-t pt-4">
         <h3 className="font-bold text-base mb-3">Price</h3>
         <div className="space-y-2">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="radio" name="price" className="w-4 h-4" />
-            <span>All</span>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]">
+            <input
+              type="radio"
+              name="price"
+              checked={!filters.priceRange}
+              onChange={() => onFilterChange("priceRange", null)}
+              className="w-4 h-4 text-[#e77600] focus:ring-[#e77600]"
+            />
+            <span>All Prices</span>
           </label>
           {priceRanges.map((range, index) => (
             <label
               key={index}
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]"
             >
-              <input type="radio" name="price" className="w-4 h-4" />
+              <input
+                type="radio"
+                name="price"
+                checked={filters.priceRange === range.value}
+                onChange={() => onFilterChange("priceRange", range.value)}
+                className="w-4 h-4 text-[#e77600] focus:ring-[#e77600]"
+              />
               <span>{range.label}</span>
             </label>
           ))}
         </div>
       </div>
 
-      {/* Deals & Discount */}
+      {/* Brands */}
       <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Deals & Discount</h3>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4" />
-            <span>All Discounts</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4" />
-            <span>Today's Deals</span>
-          </label>
+        <h3 className="font-bold text-base mb-3">Brands</h3>
+        <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+          {availableBrands.length === 0 ? (
+            <p className="text-gray-500 text-xs">No brands available</p>
+          ) : (
+            availableBrands.map((brand, index) => (
+              <label
+                key={index}
+                className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]"
+              >
+                <input
+                  type="checkbox"
+                  checked={(filters.brands || []).includes(brand)}
+                  onChange={() => handleBrandChange(brand)}
+                  className="w-4 h-4 text-[#e77600] rounded focus:ring-[#e77600]"
+                />
+                <span className="capitalize">{brand}</span>
+              </label>
+            ))
+          )}
         </div>
       </div>
 
-      {/* Item Condition */}
+      {/* Customer Reviews (Dummy) */}
       <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Item Condition</h3>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="radio"
-            name="condition"
-            defaultChecked
-            className="w-4 h-4"
-          />
-          <span>New</span>
-        </label>
-      </div>
-
-      {/* Pay on Delivery */}
-      <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Pay on Delivery</h3>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" className="w-4 h-4" />
-          <span>Eligible for Pay on Delivery</span>
-        </label>
-      </div>
-
-      {/* Discount */}
-      <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Discount</h3>
+        <h3 className="font-bold text-base mb-3">Avg. Customer Review</h3>
         <div className="space-y-2">
-          {discounts.map((discount, index) => (
+          {[4, 3, 2, 1].map((rating) => (
             <label
-              key={index}
-              className="flex items-center gap-2 cursor-pointer"
+              key={rating}
+              className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]"
             >
-              <input type="radio" name="discount" className="w-4 h-4" />
-              <span>{discount.label}</span>
+              <input
+                type="radio"
+                name="rating"
+                className="w-4 h-4 text-[#e77600] focus:ring-[#e77600]"
+              />
+              <div className="flex items-center gap-1">
+                <div className="flex text-[#FFA41C]">
+                  {[...Array(5)].map((_, i) => (
+                    <span
+                      key={i}
+                      className={
+                        i < rating ? "text-[#FFA41C]" : "text-gray-300"
+                      }
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="text-gray-600">& up</span>
+              </div>
             </label>
           ))}
         </div>
       </div>
 
-      {/* Seller */}
+      {/* Item Condition (Dummy) */}
       <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Seller</h3>
+        <h3 className="font-bold text-base mb-3">Condition</h3>
         <div className="space-y-2">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4" />
-            <span>DAWLANCE ELECTRONICS PRIVATE LIMITED</span>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]">
+            <input
+              type="checkbox"
+              className="w-4 h-4 text-[#e77600] rounded focus:ring-[#e77600]"
+            />
+            <span>New</span>
           </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4" />
-            <span>Intelli Retail</span>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4" />
-            <span>DIGI WORLD ELECTRONICS</span>
+          <label className="flex items-center gap-2 cursor-pointer hover:text-[#e77600]">
+            <input
+              type="checkbox"
+              className="w-4 h-4 text-[#e77600] rounded focus:ring-[#e77600]"
+            />
+            <span>Renewed</span>
           </label>
         </div>
-      </div>
-
-      {/* Availability */}
-      <div className="border-t pt-4">
-        <h3 className="font-bold text-base mb-3">Availability</h3>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" className="w-4 h-4" />
-          <span>Include Out of Stock</span>
-        </label>
       </div>
     </div>
   );
