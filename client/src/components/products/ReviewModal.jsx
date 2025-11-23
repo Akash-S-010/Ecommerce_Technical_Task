@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { X, Star } from "lucide-react";
+import Button from "../ui/Button";
 
 const ReviewModal = ({ isOpen, onClose, onSubmit, loading }) => {
   const [rating, setRating] = useState(0);
@@ -82,20 +83,22 @@ const ReviewModal = ({ isOpen, onClose, onSubmit, loading }) => {
           </div>
 
           <div className="flex justify-end gap-2">
-            <button
+            <Button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 border border-gray-300 rounded-md"
+              variant="secondary"
+              className="w-auto"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               disabled={loading || rating === 0}
-              className="px-4 py-2 text-sm font-medium text-black bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+              variant="primary"
+              className="w-auto"
             >
               {loading ? "Submitting..." : "Submit"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

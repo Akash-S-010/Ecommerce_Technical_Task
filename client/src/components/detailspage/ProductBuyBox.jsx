@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import useCartStore from "../../store/useCartStore";
+import Button from "../ui/Button";
 
 const ProductBuyBox = ({ product, user }) => {
   const navigate = useNavigate();
@@ -76,15 +77,21 @@ const ProductBuyBox = ({ product, user }) => {
         </div>
 
         <div className="space-y-3 mb-4">
-          <button
-            onClick={handleAddToCart}
-            className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm"
-          >
-            Add to Cart
-          </button>
-          <button className="w-full bg-[#FFA41C] hover:bg-[#FA8900] border border-[#FF8F00] rounded-full py-2 text-sm shadow-sm">
-            Buy Now
-          </button>
+          <div className="space-y-3 mb-4">
+            <Button
+              onClick={handleAddToCart}
+              variant="primary"
+              className="rounded-full"
+            >
+              Add to Cart
+            </Button>
+            <Button
+              variant="secondary"
+              className="rounded-full bg-[#FFA41C] hover:bg-[#FA8900] border-[#FF8F00] text-black"
+            >
+              Buy Now
+            </Button>
+          </div>
         </div>
 
         <div className="text-xs text-gray-600 space-y-2 mb-4">

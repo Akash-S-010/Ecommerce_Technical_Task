@@ -14,7 +14,7 @@ const Button = ({
 
   const variants = {
     primary:
-      "bg-[#FFD814] hover:bg-[#F7CA00] font-semibold text-gray-900 focus:ring-yellow-500 border border-[#FCD200] shadow-sm",
+      "bg-amazon-orange hover:bg-[#F7CA00] font-semibold text-gray-900 focus:ring-yellow-500 border border-[#FCD200] shadow-sm",
     secondary:
       "bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 focus:ring-gray-500 shadow-sm",
     link: "bg-transparent hover:underline text-blue-600 focus:ring-blue-500 border-none shadow-none",

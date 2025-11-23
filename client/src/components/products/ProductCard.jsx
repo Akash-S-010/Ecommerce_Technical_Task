@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useCartStore from "../../store/useCartStore";
+import Button from "../ui/Button";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCartStore();
@@ -114,15 +115,17 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Add to Cart Button */}
-      <button
+      {/* Add to Cart Button */}
+      <Button
         onClick={(e) => {
           e.preventDefault();
           addToCart(_id);
         }}
-        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] text-sm py-1.5 rounded-lg border border-[#FCD200] font-normal"
+        variant="primary"
+        className="rounded-lg py-1.5"
       >
         Add to cart
-      </button>
+      </Button>
     </div>
   );
 };

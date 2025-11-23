@@ -1,6 +1,7 @@
 import React from "react";
 import useCartStore from "../../store/useCartStore";
 import { CheckCircle } from "lucide-react";
+import Button from "../ui/Button";
 
 const CartSubtotal = () => {
   const { cart } = useCartStore();
@@ -31,12 +32,13 @@ const CartSubtotal = () => {
       </div>
 
       {/* Proceed to Buy Button */}
-      <button
+      <Button
         onClick={() => (window.location.href = "/checkout")}
-        className="w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-full py-2 text-sm shadow-sm mb-4"
+        variant="primary"
+        className="mb-4 rounded-full"
       >
         Proceed to Buy
-      </button>
+      </Button>
 
       {/* EMI Option */}
       <div className="border border-gray-300 rounded-md p-3 cursor-pointer hover:bg-gray-50 flex justify-between items-center">

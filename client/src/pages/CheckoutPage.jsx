@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { MapPin, CreditCard } from "lucide-react";
+import Button from "../components/ui/Button";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -264,15 +265,14 @@ const CheckoutPage = () => {
           {/* Right Column: Order Summary */}
           <div className="lg:w-[300px] shrink-0">
             <div className="bg-white p-4 rounded-lg border border-gray-200 sticky top-4">
-              <button
+              <Button
                 onClick={handlePlaceOrder}
                 disabled={isProcessing}
-                className={`w-full bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md py-2 text-sm shadow-sm mb-4 ${
-                  isProcessing ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+                variant="primary"
+                className="mb-4"
               >
                 {isProcessing ? "Placing Order..." : "Place Your Order"}
-              </button>
+              </Button>
 
               <div className="text-xs text-center text-gray-500 mb-4">
                 By placing your order, you agree to Amazon's{" "}

@@ -96,7 +96,7 @@ const Header = () => {
 
         {/* Account & Lists */}
         <div className="relative group border border-transparent hover:border-white rounded-sm p-2 cursor-pointer leading-tight">
-          <Link to={isAuthenticated ? "/business-account" : "/login"}>
+          <Link to={isAuthenticated ? "" : "/login"}>
             <div className="text-xs text-gray-300">{greetingText}</div>
             <div className="text-sm font-bold flex items-center gap-0.5">
               Account & Lists <ChevronDown className="w-3 h-3 text-gray-400" />

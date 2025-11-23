@@ -5,6 +5,7 @@ import { Plus, Trash2, Upload } from "lucide-react";
 import productApi from "../api/productApi";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import Button from "../components/ui/Button";
 
 const AddProductPage = () => {
   const navigate = useNavigate();
@@ -231,15 +232,16 @@ const AddProductPage = () => {
 
             {/* Submit Button */}
             <div className="pt-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full py-3 px-4 bg-[#FFD814] hover:bg-[#F7CA00] border border-[#FCD200] rounded-md shadow-sm font-medium text-gray-900 transition-colors ${
-                  loading ? "opacity-70 cursor-not-allowed" : ""
-                }`}
-              >
-                {loading ? "Creating Product..." : "Add Product"}
-              </button>
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  variant="primary"
+                  className="py-3"
+                >
+                  {loading ? "Creating Product..." : "Add Product"}
+                </Button>
+              </div>
             </div>
           </form>
         </div>

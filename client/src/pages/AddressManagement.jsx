@@ -6,6 +6,7 @@ import DetailedProductScroll from "../components/home/DetailedProductScroll";
 import { detailedScrollData } from "../data/detailedScrollData";
 import useAuthStore from "../store/useAuthStore";
 import toast from "react-hot-toast";
+import Button from "../components/ui/Button";
 
 const AddressManagement = () => {
   const {
@@ -109,7 +110,9 @@ const AddressManagement = () => {
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 max-w-[1000px] mx-auto w-full py-20">
-        <h1 className="text-2xl font-semibold mb-6 text-[#111]">Your Addresses</h1>
+        <h1 className="text-2xl font-semibold mb-6 text-[#111]">
+          Your Addresses
+        </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Add Address Card */}
@@ -271,17 +274,18 @@ const AddressManagement = () => {
               </div>
 
               <div className="pt-2">
-                <button
+                <Button
                   type="submit"
                   disabled={isLoading}
-                  className="bg-[#F7CA00] hover:bg-[#F0B500] text-[#111] text-sm font-normal py-2 px-4 rounded-lg shadow-sm w-full border border-[#FCD200] cursor-pointer"
+                  variant="primary"
+                  className="w-full"
                 >
                   {isLoading
                     ? "Saving..."
                     : editingAddress
                     ? "Update Address"
                     : "Add Address"}
-                </button>
+                </Button>
               </div>
             </form>
           </div>
