@@ -175,7 +175,7 @@ const Products = () => {
                     rating: null,
                   })
                 }
-                className="text-[#007185] hover:underline"
+                className="text-blue-500 hover:underline"
               >
                 Clear all filters
               </button>

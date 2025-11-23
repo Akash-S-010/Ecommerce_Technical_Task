@@ -194,7 +194,7 @@ const AddProductPage = () => {
 
             {/* Image URLs */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+              <label className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                 <Upload className="w-4 h-4" /> Product Images (URLs)
               </label>
               <div className="space-y-3">
@@ -223,7 +223,7 @@ const AddProductPage = () => {
               <button
                 type="button"
                 onClick={addImageField}
-                className="mt-3 text-sm text-[#007185] hover:underline flex items-center gap-1 font-medium"
+                className="mt-3 text-sm text-blue-600 hover:underline flex items-center gap-1 font-medium"
               >
                 <Plus className="w-4 h-4" /> Add another image URL
               </button>
