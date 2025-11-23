@@ -14,7 +14,35 @@ export const signUp = async (req, res) => {
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
+    
     if (existingUser) {
+      // If user exists but is not verified, allow them to update details and resend OTP
+      if (!existingUser.isVerified) {
+        // Generate new OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // valid for 10 minutes
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Update user details
+        existingUser.name = name;
+        existingUser.password = hashedPassword;
+        existingUser.otp = otp;
+        existingUser.otpExpiresAt = otpExpiresAt;
+
+        await existingUser.save();
+
+        // Send OTP to user's email
+        await sendOTPEmail(email, otp, 'Verify your email');
+
+        return res.status(200).json({
+          message: 'OTP resent to your email. Please verify.',
+          userId: existingUser._id
+        });
+      }
+      
+      // User exists and is already verified
       return res.status(400).json({ message: 'User already exists' });
     }
 
