@@ -13,6 +13,12 @@ const productApi = {
         return response.data;
     },
 
+    // Create a new product
+    createProduct: async (productData) => {
+        const response = await axiosInstance.post('/products', productData);
+        return response.data;
+    },
+
     // Add product review
     addProductReview: async (productId, reviewData) => {
         const response = await axiosInstance.post(`/products/${productId}/reviews`, reviewData);

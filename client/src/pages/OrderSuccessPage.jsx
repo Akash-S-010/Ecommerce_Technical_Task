@@ -116,7 +116,7 @@ const OrderSuccessPage = () => {
               View Your Orders
             </Link>
             <Link
-              to="/"
+              to="/products"
               className="border border-gray-300 rounded-md px-6 py-2 text-sm hover:bg-gray-50 font-medium"
             >
               Continue Shopping

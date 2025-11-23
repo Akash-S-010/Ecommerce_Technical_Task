@@ -19,6 +19,7 @@ import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
+import AddProductPage from "./pages/AddProductPage";
 import NotFound from "./pages/NotFound";
 
 import ScrollToTop from "./components/layout/ScrollToTop";
@@ -73,8 +74,13 @@ const App = () => {
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/business-account" element={<BusinessProfile />} />
         <Route path="/manage-address" element={<AddressManagement />} />
+
+        {/* Product Routes */}
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/add-product" element={<AddProductPage />} />
+
+        {/* Order & Cart Routes */}
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/order-success/:id" element={<OrderSuccessPage />} />
