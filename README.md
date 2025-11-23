@@ -34,6 +34,7 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) e-commerce application w
 | **React Hot Toast**     | Toast notifications for user feedback               |
 | **@react-oauth/google** | Google OAuth 2.0 authentication                     |
 | **Lucide React**        | Modern icon library                                 |
+| **Razorpay**            | For Payment Gateway                                 |
 
 ### Backend (Server)
 
@@ -60,7 +61,7 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) e-commerce application w
 
 #### Email/Password Authentication
 
-- User registration with email verification via OTP
+- User registration with email verification via OTP send to mail
 - Secure login with JWT-based authentication
 - Password hashing using bcrypt
 - Protected routes with authentication middleware
@@ -80,7 +81,6 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) e-commerce application w
 
 - Grid view with responsive design (1-4 columns based on screen size)
 - Product cards with images, pricing, ratings, and delivery info
-- Pagination support
 - Loading states and error handling
 
 #### Advanced Filtering
