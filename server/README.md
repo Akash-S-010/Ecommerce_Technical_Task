@@ -304,7 +304,7 @@ NODE_ENV=development
 CLIENT_URL=http://localhost:5173
 
 # Database
-MONGO_URI=mongodb://localhost:27017/ecommerce
+MONGO_URI= your_mmongodb_connection_string
 # Or MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/dbname
 
 # JWT
