@@ -381,19 +381,6 @@ Deploy to Render and set environment variables:
 - Cart stored in MongoDB per user
 - Real-time updates on add/remove/quantity change
 - Cart count displayed in header badge
-
----
-
-## 🤝 Contributing
-
-This is a technical task project. For any issues or suggestions, please create an issue in the repository.
-
----
-
-## 📄 License
-
-This project is created as a technical assessment task.
-
 ---
 
 ## 👨‍💻 Author
@@ -402,27 +389,6 @@ This project is created as a technical assessment task.
 
 - GitHub: [@Akash-S-010](https://github.com/Akash-S-010)
 - Project: [Ecommerce Technical Task](https://github.com/Akash-S-010/Ecommerce_Technical_Task)
-
----
-
-## 📸 Screenshots
-
-### Homepage
-
-![Homepage](docs/screenshots/home.png)
-
-### Product Listing with Filters
-
-![Products](docs/screenshots/products.png)
-
-### Shopping Cart
-
-![Cart](docs/screenshots/cart.png)
-
-### Checkout
-
-![Checkout](docs/screenshots/checkout.png)
-
 ---
 
 **Built with ❤️ using MERN Stack**
